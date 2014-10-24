@@ -1,8 +1,16 @@
-# CodersTV: New UI branch #
+# CodersTV
 
-## Initial goals ##
+This is our website, made with love and Meteor.
 
-- [ ] Main SASS project structure
-- [ ] Components: Buttons
-- [ ] Components: Boxes
-- [ ] Components: Navigation
+## Dependencies
+
+* Meteor
+* Meteorite
+
+## Running locally
+
+`./dev run`
+
+## Deploying
+
+TODO

@@ -1,0 +1,35 @@
+# Meteor packages used by this project, one per line.
+#
+# 'meteor add' and 'meteor remove' will edit this file for you,
+# but you can also edit it by hand.
+
+underscore
+accounts-google
+less
+spiderable
+jquery
+email
+standard-app-packages
+chatroom
+collection-hooks
+font-awesome
+handlebar-helpers
+handlebars-server
+iron-router
+marked
+mongo-counter
+npm
+presence
+robots-txt
+roles
+sitemaps
+streams
+fast-render
+bootstrap-3
+service-configuration
+accounts-ui-unstyled
+collection-helpers
+typeahead
+reactive-path
+multiple-callbacks
+shareit
