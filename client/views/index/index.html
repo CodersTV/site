@@ -1,0 +1,127 @@
+
+<template name="index">
+
+  <div class="crp-showcase">
+    <div class="container">
+      <div class="row" id="coderstv-big">
+        <div class="col-sm-6 col-md-offset-3">
+          <div class="text-center animated fadeInDown">
+            <img src="/images/coders-shield.png" alt="CodersTV" title="CodersTV" class="pull-left shield">
+            <h1 class="text-near-shield">CODERS<span class="title-tv">TV</span></h1>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="text-center animated fadeInDown">
+            <form id="nl-form" class="nl-form">
+              I want to
+              <select name="action">
+                <option selected value="watch">watch</option> 
+                <option value="produce">produce</option> 
+              </select>
+              videos about  
+              <input type="text" name="language" value="" placeholder="any language" data-subline="For example: <em>Python</em> or <em>Javascript</em>"/>
+              <div class="nl-overlay"></div>
+              <div class="text-center actions animated fadeInDown delay2">
+                <button type="submit" class="btn btn-color">Go!</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Features -->
+  <div class="row">
+    <div class="container">
+      <div class="col-sm-4">
+        <div class="crp-ft">
+          <i class="text-color fa fa-pencil fa-3x"></i>
+          <h4>Teach other people</h4>
+          <p class="text-muted lh">
+            You can produce live broadcasts to teach other people that wants to code.
+          </p>
+          <a href="#" class="btn btn-color btn-block hidden btn-xxl">Action</a>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="crp-ft">
+          <i class="text-color fa fa-bullhorn fa-3x"></i>
+          <h4>Show something you've done</h4>
+          <p class="text-muted lh">
+            Are you owner of a cool technology? Made something uber nice? Show it to the public. 
+          </p>
+          <a href="#" class="btn btn-color btn-block hidden btn-xxl">Action</a>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="crp-ft">
+          <i class="text-color fa fa-money fa-3x"></i>
+          <h4>Receive donations from viewers</h4>
+          <p class="text-muted lh">
+            People can pay your coffee so you can continue making awesome coding sessions. 
+          </p>
+          <a href="#" class="btn btn-color btn-block hidden btn-xxl">Action</a>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- // Features -->
+
+    <!-- featured broadcast -->
+    {{#with featuredBroadcast}}
+      {{> featured_broadcast}}
+    {{/with}}
+    <!-- // featured broadcast -->
+
+    <!-- Recent Videos -->
+    <div class="recent-works video-list">
+      <div class="row">
+        <div class="container">
+          <div class="col-sm-8 col-sm-offset-2">
+            <h2 class="oswald text-center">Recent Videos</h2>
+            <hr class="double-margin">
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row row col-md-12 col-sm-12 col-md-offset-0 col-sm-offset-0">
+          {{#each pastList}}
+          {{> video_thumb}}
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    <!-- // Recent Videos -->
+
+</template>
+
+<template name="featured_broadcast">
+  <div id="featured-video" class="row crp-desc">
+    <div class="container">
+      <div class="col-sm-8 col-sm-offset-2">
+        <h2 class="oswald text-center">Featured Broadcast</h2>
+        <hr class="double-margin">
+      </div>
+      <div class="col-xs-6 col-sm-5 col-sm-offset-1">
+        <a href="{{getVideoUrl owner _id}}">
+          <img src="{{featuredImage}}" alt="{{title}}" title="{{title}}" class="img-responsive">
+        </a>
+      </div>
+      <div class="col-sm-5">
+        <h3 class="truncate text-color text-center-xs" title="{{title}}" alt="{{title}}">{{title}}</h3>
+        <p class="truncate text-center-xs">
+          {{#with getUser owner}}
+          <img class="img-circle video-owner" src="{{superchat.pic_square}}" alt="{{profile.name}}" title="{{profile.name}}" />
+          {{profile.name}}
+          {{/with}}
+        </p>
+        <p class="text-muted text-center-xs lh">
+          {{description}}
+        </p>
+        <p class="text-center-xs"><a href="{{getVideoUrl owner _id}}" class="btn btn-lg btn-color btn-primary"><i class="fa fa-youtube-play"></i>Watch now</a></p>
+      </div>
+    </div>
+  </div>
+</template>

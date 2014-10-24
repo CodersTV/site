@@ -1,0 +1,184 @@
+<template name="preferences">
+  <div class="row">
+    <div class="container-fluid content-header">
+      <div class="container">
+        <h1 class="oswald text-muted"><em class="text-color">Preferences</em></h1>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      {{> choose_username_form}}
+    </div>
+    <hr />
+    <div class="row">
+      {{> channel_description_form}}
+    </div>
+    <hr />
+    <div class="row">
+      {{> paypal_form}}
+    </div>
+    <hr />
+    <div class="row">
+      {{> people_you_follow}}
+    </div>
+  </div>
+</template>
+
+<template name="choose_username_form">
+  <form class="form-horizontal">
+    <fieldset>
+      {{#if getUsername}}
+      <p>
+        <label class="col-md-2" for="username">Your unique URL:</label>
+        <a href="{{getCoderChannelURL $.Meteor.userId}}" id="unique-url">{{ROOT_URL}}{{getCoderChannelURL MeteorUserId}}</a>
+      </p>
+      {{else}}
+      <!-- Prepended text-->
+      <div class="form-group">
+        <label class="col-md-2 control-label" for="username">Choose your username</label>
+        <div class="col-md-5">
+          <div class="input-group">
+            <span id="root-url" class="input-group-addon">{{ROOT_URL}}/coder/</span>
+            <input id="username" name="username" class="form-control" placeholder="" type="text" required="">
+          </div>
+        </div>
+      </div>
+
+      <!-- Button -->
+      <div class="form-group">
+        <label class="col-md-2 control-label" for="set-username"></label>
+        <div class="col-md-4">
+          <button id="set-username" name="set-username" class="btn btn-color">Save</button>
+        </div>
+      </div>
+      {{/if}}
+
+    </fieldset>
+  </form>
+</template>
+
+<template name="channel_description_form">
+  <form id="description-form" class="form-horizontal">
+    <fieldset>
+      <legend>Your public profile preferences</legend>
+      <div class="form-group">
+        <label class="col-md-2 control-label" for="user-description">Your public description (supports Github Flavored Markdown)</label>
+        <div class="col-md-10">                     
+          <textarea class="form-control" id="user-description" name="user-description" rows="10" placeholder="This will be shown on your public profile and first three lines on find experts screen.">{{#if myDescription}}{{myDescription}}{{/if}}</textarea>
+        </div>
+      </div>
+      <!-- Button -->
+      <div class="form-group">
+        <label class="col-md-2 control-label" for="set-username"></label>
+        <div class="col-md-4">
+          <button id="set-username" name="set-username" class="btn btn-color">Save</button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</template>
+
+<template name="paypal_form">
+  {{#with $.Meteor.user}}
+  <form id="paypal-preferences" class="form-horizontal">
+    <fieldset>
+      <legend>Paypal Preferences</legend>
+
+      <!-- Multiple Checkboxes -->
+      <div class="form-group">
+        <label class="col-md-2 control-label" for="">Allow people donating me through Paypal</label>
+        <div class="col-md-4">
+          <div class="checkbox">
+            <label for="allow-paypal">
+              {{#if paypal.amount}}
+              <input type="checkbox" name="checkboxes" id="allow-paypal" value="Allow" checked="">
+              {{else}}
+              <input type="checkbox" name="checkboxes" id="allow-paypal" value="Allow">
+              {{/if}}
+              Allow
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="show-hide-group {{getPaypalAmountClass}}">
+        <!-- Select Basic -->
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="currency">Currency</label>
+          <div class="col-md-2">
+            <select id="currency" name="currency" class="form-control">
+              {{#each currencies}}
+                {{#if $eq this ../paypal.currency}}
+                <option selected="">
+                  {{this}}
+                </option>
+                {{else}}
+                <option>
+                  {{this}}
+                </option>
+                {{/if}}
+              {{/each}}
+            </select>
+          </div>
+        </div>
+
+        <!-- Prepended text-->
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="amount">Amount per donation</label>
+          <div class="col-md-2">
+            <div class="input-group">
+              <span id="amount-addon" class="input-group-addon">
+                {{#if paypal.currency}}
+                {{paypal.currency}}
+                {{else}}
+                USD
+                {{/if}}
+              </span>
+              <input id="amount" name="amount" class="input-small" value="2.99" min="0" max="100" step="any" type="number">
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="email">Paypal email</label>  
+          <div class="col-md-4">
+            <input id="email" name="email" type="text" placeholder="" class="form-control input-md" required="" value="{{paypal.email}}">
+
+          </div>
+        </div>
+    </div>
+
+      <!-- Button -->
+      <div class="form-group">
+        <label class="col-md-2 control-label" for="save-paypal"></label>
+        <div class="col-md-4">
+          <button id="save-paypal" name="save-paypal" class="btn btn-color">Save</button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+  {{/with}}
+</template>
+
+<template name="people_you_follow">
+    <legend>People you follow:</legend>
+    <ul id="followers">
+    {{#each followers}}
+        {{#with getUser coderId}}
+            <li class="follower">
+                <div class="unfollow-coder pull-right">
+                    <button class="btn btn-danger unfollow-coder-btn">Unfollow</button>
+                </div> 
+                <div class="follower-info">
+                  <img src="{{superchat.pic_square}}" alt="{{profile.name}}" title="{{profile.name}}" class="profile-avatar img-circle" onerror="this.src='/images/default_google_picture.png';this.removeAttribute('onerror');" />
+                    <a href="{{getCoderChannelURL _id}}">{{profile.name}}</a>
+                </div> 
+            </li>    
+        {{/with}}
+    {{/each}}
+    </ul>
+</template>
+

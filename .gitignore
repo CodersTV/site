@@ -1,0 +1,8 @@
+.project
+tags
+.pydevproject
+smart.lock
+packages/meteor-server-eval
+packages/vector
+dev.json
+prod.json

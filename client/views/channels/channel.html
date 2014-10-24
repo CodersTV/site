@@ -1,0 +1,147 @@
+<template name="channel">
+
+  <div class="row">
+    <div class="container-fluid content-header">
+      <div class="container channel-info">
+        <h1 class="oswald text-muted truncate">
+            {{#with getChannel}}
+              {{#with getUser owner}}
+                <img src="{{superchat.pic_square}}" alt="" class="img-circle channel-avatar" onerror="this.src='/images/default_google_picture.png';this.removeAttribute('onerror');" />
+                {{../title}} - 
+                <a href="{{getCoderChannelURL _id}}">
+                {{profile.name}}
+                </a>
+                coding with {{../language}}
+              {{/with}}
+            {{else}}
+              {{#with getCoder}}
+              <img src="{{superchat.pic_square}}" alt="" class="img-circle channel-avatar" onerror="this.src='/images/default_google_picture.png';this.removeAttribute('onerror');" />
+              {{profile.name}}
+              is not broadcasting right now.
+              {{/with}}
+            {{/with}}
+        </h1>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div id="video-container" class="col-md-8">
+        <div class="row flex-video">
+            {{#with getChannel}}
+              <div id="player-parent">
+                  <div id="player-div"></div>
+              </div>
+            {{else}}
+              {{#with getCoder}}
+                {{> info_row}}
+              {{/with}}
+            {{/with}}
+        </div>
+        <div class="row">
+            {{#with getChannel}}
+              {{> info_row}}
+            {{/with}}
+        </div>
+      </div>
+      <div class="col-md-4">
+          {{#with getChannel}}
+            {{#if isLive}}
+              {{> chatroom}}
+            {{else}}
+            <div id="disqus_thread"></div>
+            {{/if}}
+          {{else}}
+            {{#with getCoder}}
+              {{> chatroom}} 
+            {{/with}}
+          {{/with}}
+      </div>
+    </div>
+    <hr/>
+    <div class="row">
+      {{> channel_past_videos}}
+    </div>
+  </div>
+</template>
+
+<template name="info_row">
+  <div id="info-row">
+    <div class="row">
+        <div class="col-md-8">
+          {{#if following}}
+          <button class="btn btn-follow unfollow-coder pull-left">Following</button>
+          {{else}}
+          <button class="btn btn-follow btn-color follow-coder pull-left">Follow this coder</button>
+          {{/if}}
+          
+          {{#with getUser owner}}
+            {{#if paypal.amount}}
+              {{> donnation_button}}
+            {{/if}}
+          {{/with}}
+          
+          {{#if isLive}}
+            <!--
+            <span class="pull-right"><i class="fa fa-user"></i> {{watchers}} watching</span>
+            -->
+          {{/if}}
+        </div>
+        <div class="col-md-4">
+          {{#if isLive}}
+            <div class="watching-count pull-right">
+              <i class="fa fa-user" style="color: #FD8F00;"></i>
+              {{watchers}} coders watching
+            </div>
+          {{/if}}
+        </div>
+    </div>
+    <div class="row">
+      {{> channel_video_description}}
+    </div>
+    <hr/>
+    <div class="row">
+      {{> channel_description}}
+    </div>
+  </div>
+</template>
+
+<template name="channel_description">
+  <h3 class="text-color">Coder Information</h3>
+  {{#markdown}}{{{getUserDescription}}}{{/markdown}}
+</template>
+
+<template name="channel_past_videos">
+  <h3 class="text-color">Past broadcasts</h3>
+  <div class="video-list">
+      {{#each pastList}}
+          {{> video_thumb}}
+      {{else}}
+      <p>
+          This user hasn't made any videos yet.
+      </p>
+      {{/each}}
+  </div>
+</template>
+
+<template name="channel_video_description">
+  <h3 class="text-color">Video Description</h3>
+  {{#markdown}}{{{description}}}{{/markdown}}
+</template>
+
+<template name="donnation_button">
+<div class="donnation-box">
+  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+    <input type="hidden" name="cmd" value="_donations">
+    <input type="hidden" name="business" value="{{paypal.email}}">
+    <input type="hidden" name="lc" value="US">
+    <input type="hidden" name="item_name" value="{{profile.name}} donation">
+    <input type="hidden" name="amount" value="{{paypal.amount}}">
+    <input type="hidden" name="currency_code" value="{{paypal.currency}}">
+    <input type="hidden" name="no_note" value="0">
+    <input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
+    <input class="btn btn-success" type="submit" name="submit" alt="PayPal - The safer, easier way to pay online!" value="Support me with {{paypal.currency}} ${{paypal.amount}}">
+    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+  </form>
+</div>
+</template>

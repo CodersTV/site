@@ -1,0 +1,83 @@
+<template name="agenda">
+  {{#pageWrapper headingNormal="Scheduled" headingBold="event"}}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-9 well">
+            <div class="row">
+              <h1>
+                {{#unless isActive}}
+                (Cancelled event and unlisted) -
+                {{/unless}}
+                {{title}}
+              </h1>
+            </div>
+            {{#if $eq owner $.Meteor.userId}}
+            <div class="row">
+              {{#if isActive}} 
+              <button class="js-cancel-event btn btn-danger">Cancel this event</button>
+              {{else}}
+              <button class="js-uncancel-event btn btn-success">Undo cancel event</button>
+              {{/if}}
+            </div>
+            {{/if}}
+            <div class="row">
+              <h3><i class="fa fa-calendar"></i> When:</h3>
+              <p>{{formatDate date}} <small class="text-muted">({{fromNow date}})</small></p>
+            </div>
+            <div class="row">
+              <h3><i class="fa fa-link"></i> Where:</h3>
+              <a href="{{getCoderChannelURL owner}}">{{ROOT_URL}}{{getCoderChannelURL owner}}</a>
+            </div>
+            <div class="row">
+              <h3><i class="fa fa-code"></i> About the event:</h3>
+              {{#markdown}}{{{description}}}{{/markdown}}
+            </div>
+            {{#with getUser owner}}
+            <div class="row">
+              <h3><i class="fa fa-user"></i> About the coder:</h3>
+              {{#markdown}}{{{profile.description}}}{{/markdown}}
+            </div>
+            {{/with}}
+          </div>
+          <div class="col-md-3 text-center">
+            {{#with getUser owner}}
+            <div class="row well">
+              <figure>
+                <figcaption class="text-muted">
+                  Brought by:
+                </figcaption>
+                <img src="{{superchat.pic_square}}" alt="{{profile.name}}" title="{{profile.name}}" class="js-user-profile img-circle img-responsive profile-pic center-block">
+                <figcaption class="js-user-profile">
+                  <h3>{{profile.name}}</h3>
+                </figcaption>
+                <figcaption>
+                  {{#if isFollowingCoder ../owner}}
+                  <button class="btn unfollow-coder">Unfollow</button>
+                  {{else}}
+                  <button class="btn btn-color follow-coder">Follow</button>
+                  {{/if}}
+                  <p><small class="text-muted">(follow to receive notifications about the event)</small></p>
+                </figcaption>
+              </figure>
+            </div>
+            {{/with}}
+            <div class="row well">
+              <h5>Share this event:</h5>
+              {{#with title}}
+                {{> shareit_twitter title=this}} 
+                {{> shareit_fb title=this}}
+                {{> shareit_google title=this}}
+              {{/with}}
+            </div>
+          </div>
+        </div>  
+        <div class="row">
+          <div class="col-md-12">
+            <div id="disqus_thread"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/pageWrapper}}
+</template>

@@ -1,0 +1,137 @@
+#!/bin/bash
+set -e -x
+
+PWD=`pwd`
+source "$PWD/prod.config"
+
+if [ -z "$GIT_URL" ]; then
+	echo "You need to create a conf file named prod.config"
+	exit 1
+fi
+
+###################
+# You usually don't need to change anything here –
+# You should modify your prod.config file instead.
+#
+
+APP_DIR=/home/meteor
+ROOT_URL=http://$APP_HOST
+MONGO_URL=mongodb://localhost:27017/$APP_NAME
+
+if $METEORITE; then
+	METEOR_CMD=mrt
+	METEOR_OPTIONS=''
+else
+	METEOR_CMD=meteor
+	METEOR_OPTIONS='--release 0.6.4.1'
+fi
+
+if [ -z "$EC2_PEM_FILE" ]; then
+	SSH_HOST="root@$APP_HOST" SSH_OPT=""
+else
+	SSH_HOST="ubuntu@$APP_HOST" SSH_OPT="-i $EC2_PEM_FILE"
+fi
+
+
+
+SETUP="
+sudo apt-get -qq update;
+sudo apt-get install -y software-properties-common make g++;
+sudo add-apt-repository -y ppa:chris-lea/node.js;
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10;
+echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/10gen.list;
+sudo apt-get -qq update;
+sudo apt-get install -y git mongodb-10gen;
+sudo apt-get install -y nodejs npm libfreetype6 fontconfig;
+node --version;
+sudo npm install -g pm2 --unsafe-perm;
+curl https://install.meteor.com | /bin/sh;
+sudo npm install -g meteorite;
+sudo npm install -g fibers@1.0.1;
+cd /usr/local/share/;
+sudo wget https://phantomjs.googlecode.com/files/phantomjs-1.9.1-linux-x86_64.tar.bz2;
+sudo tar -xvjf phantomjs-1.9.1-linux-x86_64.tar.bz2;
+sudo mv phantomjs-1.9.1-linux-x86_64 phantomjs;
+sudo ln -s /usr/local/share/phantomjs/bin/phantomjs /usr/bin/phantomjs;
+sudo mkdir -p $APP_DIR;
+cd $APP_DIR;
+pwd;
+sudo ssh-keygen -t rsa;
+sudo cat ~/.ssh/id_rsa.pub;
+echo 'Add above key to github repo. Press any key to start cloning repo...';
+read -p 'Press any key to start cloning repo';
+sudo git clone $GIT_URL $APP_NAME;
+"
+
+DEPLOY="
+cd $APP_DIR;
+cd $APP_NAME;
+sudo npm -g update meteorite;
+sudo git checkout $GIT_BRANCH;
+sudo git fetch --all;
+sudo git reset --hard origin/$GIT_BRANCH;
+sudo rm -rf ../bundle;
+sudo rm -rf ../bundle.tgz;
+sudo $METEOR_CMD update --force;
+sudo $METEOR_CMD bundle ../bundle.tgz;
+cd ..;
+sudo tar -zxvf bundle.tgz;
+pm2 delete prod;
+mongo $APP_NAME $APP_DIR/$APP_NAME/mongo.config;
+METEOR_SETTINGS=\$(cat ${APP_DIR}/${APP_NAME}/prod.json) DEBUG=ct:* PORT=80 ROOT_URL=$ROOT_URL MONGO_URL=$MONGO_URL pm2 start bundle/main.js -x --name 'prod';
+"
+
+function run {
+    mrt run --settings prod.json 
+}
+
+function mon {
+    mrt mongo
+}
+
+function monrestore {
+    mongorestore --db meteor --port 3002 dump/coderstv/
+}
+
+function release {
+    git checkout master;
+    git merge dev;
+    git push origin master;
+    ./prod deploy;
+    git checkout dev;
+}
+
+case "$1" in
+setup)
+	ssh $SSH_OPT $SSH_HOST $SETUP
+	;;
+deploy)
+	ssh $SSH_OPT $SSH_HOST $DEPLOY
+	;;
+run)
+    run 
+    ;;
+mongo)
+    mon
+    ;;
+mongorestore)
+    monrestore
+    ;;
+release)
+    release
+    ;;
+*)
+	cat <<ENDCAT
+prod [action]
+
+Available actions:
+
+setup        - Install a meteor environment on a fresh Ubuntu server
+deploy       - Deploy the app to the server
+run          - Run in localhost:3000
+mongo        - Connect to local mongodb (must run project first)
+mongorestore - Restore a dump to local mongodb (must run project first)
+release      - Merge with dev branch, push to repo and run deploy
+ENDCAT
+	;;
+esac

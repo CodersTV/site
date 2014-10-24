@@ -1,0 +1,47 @@
+<template name="schedule">
+  {{#pageWrapper headingNormal="Schedule an" headingBold="event"}}
+    <div class="row">
+      <form id="schedule-form" class="form-horizontal">
+
+        <!-- Text input-->
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="title">Title</label>  
+          <div class="col-md-8">
+            <input id="title" name="title" type="text" placeholder="Example: My leet presentation" class="form-control input-md" required="required">
+            <span class="help-block">In a few words, give a meaningful title for the broadcast</span>  
+          </div>
+        </div>
+
+        <!-- Textarea -->
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="description">Video Description<br/>(supports Github Flavored Markdown)</label>
+          <div class="col-md-8">                     
+            <textarea class="form-control" id="description" name="description" rows="10" required="required">Give full description of your broadcast and additional information.
+For example, you can paste some code here with markdown tags and it will render pretty on the schedule page:
+
+```python
+def foo():
+  return 1
+```</textarea>
+          </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="date">When</label>  
+          <div class="col-md-4 datetimepicker">
+            <input id="date" name="date" type="text" class="set-due-date form-control input-md" required="required">
+          </div>
+        </div>
+
+        <!-- Button -->
+        <div class="form-group">
+          <label class="col-md-2 control-label" for="schedule-broadcast"></label>
+          <div class="col-md-4">
+            <button id="schedule-broadcast" name="schedule-broadcast" class="btn btn-color">Schedule broadcast</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  {{/pageWrapper}}
+</template>

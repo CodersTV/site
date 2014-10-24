@@ -1,0 +1,165 @@
+
+<head>
+    <title>CodersTV | Watch programming videos or broadcast your coder skills with the world</title>
+    <meta property="og:title" content="CodersTV" />
+    <meta property="og:url" content="http://coderstv.com" />
+    <meta property="og:description" content="Watch programming videos or broadcast your coder skills with the world." />
+    <meta property="og:image" content="http://coderstv.com/images/coders-shield.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Code, Programming, Videos, Broadcast, Tutorial" />
+</head>
+
+<body>
+</body>
+
+<template name="layout">
+  {{> yield region="header"}}
+  <div class="wrapper">
+    {{> yield}}
+  </div>
+  {{> yield region="footer"}}
+</template>
+
+<template name="no_videos">
+  <h2 class="no-videos">No videos were made yet but <a href="http://coderstv.uservoice.com/forums/206494-general">make a video request right now!</a></h2>
+</template>
+
+<template name="no_one">
+  <h2>No one is currently broadcasting</h2>
+</template>
+
+<template name="not_allowed">
+  <div class="wrapper" id="content-header-wrapper">
+    <header id="content-header" class="wrapper-row common">
+      <div class="content-info">
+        <h1>Sorry, this feature is available for beta testers only.</h1>
+      </div>
+    </header>
+    <div class="wrapper-row common">
+      <h1>Want to make broadcasts ?
+        <a href="mailto:contact@coderstv.com">Click here and tell what you want to broadcast</a>
+      </h1>
+    </div>
+  </div>
+</template>
+
+<template name="loading">
+  <div class="row">
+    <div class="container-fluid content-header">
+      <div class="container">
+        <h1 class="oswald text-muted">Loading...</h1>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="spinner">
+        <div class="spinner-container container1">
+          <div class="circle1"></div>
+          <div class="circle2"></div>
+          <div class="circle3"></div>
+          <div class="circle4"></div>
+        </div>
+        <div class="spinner-container container2">
+          <div class="circle1"></div>
+          <div class="circle2"></div>
+          <div class="circle3"></div>
+          <div class="circle4"></div>
+        </div>
+        <div class="spinner-container container3">
+          <div class="circle1"></div>
+          <div class="circle2"></div>
+          <div class="circle3"></div>
+          <div class="circle4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="header">
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand logo coderstv-novo-smaller-v2" href="{{pathFor 'index'}}"></a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul id="main-nav" class="nav navbar-nav">
+          <li>
+            <a href="{{pathFor 'agendaList'}}"><i class="fa fa-calendar"></i>Scheduled Events</a>
+          </li>
+          <li>
+            <a href="{{pathFor 'codersList'}}"><i class="fa fa-youtube-play"></i>Browse Videos</a>
+          </li>
+          <li>
+            <a href="{{pathFor 'dashboard'}}"><i class="fa fa-video-camera"></i>Start a Broadcast</a>
+          </li>
+        </ul>
+
+        <!-- Search form for extra small screens -->
+        {{> search_input_channels_xs}}
+
+        <!-- Right side of navbar -->
+        <ul class="nav navbar-nav navbar-right hidden-xs">
+            {{#unless currentUser}}
+            <li id="sign-in">{{> loginButtons}}</li>
+            {{else}}
+              {{#with getSelfUser}}
+              <li class="show" id="user-bar">
+                <a href="{{pathFor 'preferences'}}" title="Preferences" alt="Preferences" class="pull-right">{{getFirstName profile.name}}</a>
+                <a href="{{pathFor 'preferences'}}" title="Preferences" alt="Preferences" class="pull-right">
+                  <span class="user-bar-avatar">
+                    <img src="{{superchat.pic_square}}" onerror="this.src='{{defaultProfilePicture}}';this.removeAttribute('onerror');" title="{{profile.name}}" alt="{{profile.name}}">
+                  </span>
+                </a>
+              </li>
+              <li id="sign-out">
+                <a href="" title="Sign Out" alt="Sign Out"><i class="fa fa-sign-out"></i></a>
+              </li>
+              {{/with}}
+            {{/unless}}
+          <!-- Search Button -->
+          <li id="search">
+            <a href="{{pathFor 'search'}}" id="search-btn"><i class="fa fa-search" id="search-icon"></i> Search</a>
+            <div class="search-box hidden" id="search-box">
+              <div class="input-group">
+                {{> search_input_channels}}
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="footer">
+  <div class="footer-wrapper"> <!-- footer wrapper -->
+    <hr>
+    <div class="container">
+      <footer>
+        <ul class="list-inline pull-left">
+          <li><a href="{{pathFor 'privacy'}}">Privacy Policy</a></li>
+          ·
+          <li><a href="mailto:contact@coderstv.com" target="_blank">Contact Us</a></li>
+        </ul>
+        <p class="pull-right">
+          <a href="mailto:contact@coderstv.com" target="_blank">Contact</a>
+          ·
+          <a href="https://www.facebook.com/coderstv" target="_blank">Facebook</a>
+          ·
+          <a href="https://twitter.com/CodersTV" target="_blank">Twitter</a>
+          ·
+          <span class="text-muted">&copy; 2014 CodersTV</span>
+        </p>
+        <div class="clearfix"></div>
+      </footer>
+    </div> <!-- /container -->
+  </div> <!-- / footer wrapper -->
+</template>

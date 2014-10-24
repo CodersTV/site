@@ -1,0 +1,53 @@
+<template name="agenda_list">
+  {{#pageWrapper headingNormal="Scheduled" headingBold="events"}}
+  <div class="row" style="margin-bottom: 10px;">
+    <div class="col-md-6">
+      <a href="{{pathFor 'schedule'}}" class="btn btn-color btn-lg">Schedule an event</a>
+    </div>
+  </div>
+  <div class="row">
+    {{#each scheduledEvents}}
+      {{> scheduled_event}}
+    {{else}}
+      <p>No events are scheduled.</p>
+    {{/each}}
+  </div>
+  {{/pageWrapper}}
+</template>
+
+<template name="scheduled_event">
+<div class="col-md-6 col-lg-6">
+  <div class="well profile">
+    <div class="col-sm-12">
+      <div class="event-link col-xs-12 col-sm-8">
+        <h2 class="event-title truncate">{{title}}</h2>
+        {{#with getUser owner}}
+        <p><strong>By: </strong> {{profile.name}} </p>
+        {{/with}}
+        <p class="description"><strong>Description: </strong>{{description}}</p>
+        <p><strong>When: </strong>{{fromNow date}}</p>
+        <!--<p><strong>Technologies: </strong>
+        <span class="tags">html5</span> 
+        <span class="tags">css3</span>
+        <span class="tags">jquery</span>
+        <span class="tags">bootstrap3</span>
+        </p>
+        -->
+      </div>             
+      <div class="col-xs-12 col-sm-4 text-center">
+        <figure>
+          {{#with getUser owner}}
+          <img src="{{superchat.pic_square}}" alt="{{profile.name}}" title="{{profile.name}}" class="img-circle img-responsive profile-pic">
+          {{/with}}
+          <figcaption class="ratings">
+            <button class="btn btn-success">
+              Read more
+            </button>
+          </figcaption>
+        </figure>
+      </div>
+    </div>            
+
+  </div>
+</div>
+</template>

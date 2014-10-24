@@ -1,0 +1,28 @@
+@yellow: #FFA800;
+@yellowClearer: #FFC832;
+@yellowHeaderShadow: #FFC000;
+@orangeTv: #FD8F00;
+@brown: #504941;
+
+@greyHeader: #333;
+@blackBorderNav: #262626;
+@greyFeatured: #C6C6BD;
+
+@greenDarker: #009B95;
+@greyMuted: #677273;
+
+.box-shadow(@style, @c) when (iscolor(@c)) {
+  -webkit-box-shadow: @style @c;
+  -moz-box-shadow:    @style @c;
+  box-shadow:         @style @c;
+}
+
+.box-shadow(@style, @alpha: 50%) when (isnumber(@alpha)) {
+  .box-shadow(@style, rgba(0, 0, 0, @alpha));
+}
+
+.rounded(@radius: 0px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  border-radius: @radius;
+}

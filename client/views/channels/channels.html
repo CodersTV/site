@@ -1,0 +1,79 @@
+<template name="channels">
+  <div class="row">
+    <div class="container-fluid content-header">
+      <div class="container">
+        <h1 class="oswald text-muted">Browse <em class="text-color">videos</em></h1>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row video-list">
+      {{#each liveList}}
+        {{> video_thumb}}
+      {{/each}}
+      {{#each pastList}}
+        {{> video_thumb}}
+      {{/each}}
+    </div>
+  </div>
+</template>
+
+<template name="video_thumb">
+  <div class="col-md-4 col-sm-4 text-center">
+    <div class="thumbnail">
+      {{#if isLive}}
+      <legend class="video-live video-status">
+        Live 
+      </legend>
+      {{else}}
+      <legend class="video-status">
+        Finished
+      </legend>
+      {{/if}}
+      <div class="image">
+        {{#if isLive}}
+        <a href="{{getCoderChannelURL owner}}" class="video-title-link">
+          <img src="http://img.youtube.com/vi/{{URL}}/hqdefault.jpg" class="img-responsive" alt="{{title}}" title="{{title}}">
+        </a>
+        {{else}}
+        <a href="{{getVideoUrl owner _id}}" class="video-title-link">
+          <img src="http://img.youtube.com/vi/{{URL}}/hqdefault.jpg" class="img-responsive" alt="{{title}}" title="{{title}}">
+        </a>
+        {{/if}}
+      </div>
+      <div class="caption">
+        <h4 class="truncate text-color" title="{{title}}" alt="{{title}}">{{title}}</h4>
+        <p class="truncate">
+          {{#with getUser owner}}
+          <img class="img-circle video-owner" onerror="this.src='{{defaultProfilePicture}}';this.removeAttribute('onerror');" src="{{superchat.pic_square}}" alt="{{profile.name}}" title="{{profile.name}}" />
+          {{profile.name}}
+          {{/with}}
+        </p>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <p class="pull-left"><i class="fa fa-code"></i>{{language}}</p>
+            <p class="pull-right">
+              <i class="fa fa-calendar"></i>
+              {{#if isLive}}
+              Live
+              {{else}}
+              {{fromNow finishedAt}}
+              {{/if}}
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-12 text-center">
+            <p class="watch-video">
+              {{#if isLive}}
+              <a href="{{getCoderChannelURL owner}}" class="btn btn-lg btn-color btn-primary"><i class="fa fa-youtube-play"></i>Watch</a>
+              {{else}}
+              <a href="{{getVideoUrl owner _id}}" class="btn btn-lg btn-color btn-primary"><i class="fa fa-youtube-play"></i>Watch</a>
+              {{/if}}
+            </p>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

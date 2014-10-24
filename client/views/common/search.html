@@ -1,0 +1,43 @@
+<template name="search">
+    <div class="row-fluid">
+        <h4>Currently broadcasting</h4>
+        <ul class="thumbnails">
+            {{#each liveList}}
+                {{> channel_thumb}}
+            {{else}}
+                {{> no_one}}
+            {{/each}}
+        </ul>
+    </div>
+    <hr />
+    <div class="row-fluid">
+        <h4>Past broadcasts</h4>
+        <ul class="thumbnails">
+            {{#each pastList}}
+                {{> video_thumb}}
+            {{else}}
+            <p>No videos were made here :(</p>
+            {{/each}}
+        </ul>
+    </div>
+</template>
+
+<template name="search_input_channels">
+  <form id="header-search">
+    <fieldset>
+      <div class="input-group-btn">
+        <input id="search-query" name="" class="form-control" placeholder="Search" type="text">
+        <button class="btn btn-color btn-primary">Go</button>
+      </div>
+    </fieldset>
+  </form>
+</template>
+
+<template name="search_input_channels_xs">
+  <form id="header-search-xs" class="navbar-form navbar-left visible-xs" role="search">
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Search">
+    </div>
+    <button type="submit" class="btn btn-color btn-default">Go!</button>
+  </form>
+</template>

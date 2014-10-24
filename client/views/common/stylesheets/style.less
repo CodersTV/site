@@ -1,0 +1,275 @@
+@yellow: #fd8f00;
+@grey: #504941;
+
+body {
+	background: url('/images/bg-grey.png');
+	font-family: Lato;
+}
+
+#login-buttons {
+	color: #999999 !important;
+	line-height: 37px !important;
+}
+
+h1.channel-title {
+    cursor: pointer;
+}
+
+h1 {
+    font-weight: 600;
+}
+
+#carousel-wrapper {
+    background: url('/images/instacode.png') center;
+    height: 600px;
+    margin-bottom: 60px;
+}
+
+#top-carousel {
+    margin: 0;
+    margin-top: 70px;
+    line-height: 1.25;
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+    max-width: 600px;
+
+    h1 {
+        font-weight: 400;
+        font-size: 64px;
+        line-height: 120px;
+
+        .title-tv {
+            font-weight: 900;
+            color: @yellow;
+        }
+    }
+
+    .shield {
+        height: 140px;
+        min-width: inherit;
+        margin-right: 35px;
+    }
+
+    .carousel-buttons {
+        margin-top: 50px;
+    }
+}
+
+.thumbnail {
+    background-color: #F5F5F5;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Lato;
+}
+
+/* Carousel base class */
+.carousel {
+	margin-bottom: 60px;
+}
+
+.carousel .container {
+	position: relative;
+	z-index: 9;
+}
+
+.carousel-control {
+	height: 80px;
+	margin-top: 0;
+	font-size: 120px;
+	text-shadow: 0 1px 1px rgba(0,0,0,.4);
+	background-color: transparent;
+	border: 0;
+	z-index: 10;
+}
+
+.carousel .item {
+	height: 500px;
+}
+.carousel img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	min-width: 100%;
+	height: 500px;
+}
+
+.carousel-caption {
+	background-color: transparent;
+	position: static;
+	max-width: 550px;
+	padding: 0 20px;
+	margin-top: 140px;
+	text-align: initial;
+}
+.carousel-caption h1, .carousel-caption .lead {
+	margin: 0;
+	line-height: 1.25;
+	color: #fff;
+	text-shadow: 0 1px 1px rgba(0,0,0,.4);
+}
+.carousel-caption .btn {
+	margin-top: 10px;
+}
+
+#carousel-first {
+}
+
+#main-page {
+	margin-top: 25px;
+}
+
+footer {
+	height: 100px;
+}
+
+.featurette-image {
+	width: 512px;
+}
+
+/* ICONS FONT-AWESOME FIXES */
+
+.icon-bolt {
+  margin-left: 4px;
+  margin-right: 5px !important;
+}
+.icon-th {
+  margin-right: 3px !important;
+}
+.icon-user {
+  margin-left: 2px !important;
+}
+.icon-code {
+  margin-left: -1px;
+}
+
+/* MARKETING CONTENT
+ -------------------------------------------------- */
+
+/* Center align the text within the three columns below the carousel */
+.marketing .span4 {
+	text-align: center;
+}
+.marketing h2 {
+	font-weight: normal;
+}
+.marketing .span4 p {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+/* Featurettes
+ ------------------------- */
+
+.featurette-divider {
+	margin: 80px 0; /* Space out the Bootstrap <hr> more */
+}
+.featurette {
+	padding-top: 120px; /* Vertically center images part 1: add padding above and below text. */
+	overflow: hidden; /* Vertically center images part 2: clear their floats. */
+}
+.featurette-image {
+	margin-top: -120px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
+}
+
+/* Give some space on the sides of the floated elements so text doesn't run right into it. */
+.featurette-image.pull-left {
+	margin-right: 40px;
+}
+.featurette-image.pull-right {
+	margin-left: 40px;
+}
+
+/* Thin out the marketing headings */
+.featurette-heading {
+	font-size: 50px;
+	font-weight: 300;
+	line-height: 1;
+	letter-spacing: -1px;
+}
+
+/* RESPONSIVE CSS
+ -------------------------------------------------- */
+
+@media (max-width: 979px) {
+
+	.container.navbar-wrapper {
+		margin-bottom: 0;
+		width: auto;
+	}
+	.navbar-inner {
+		border-radius: 0;
+		margin: -20px 0;
+	}
+
+	.carousel .item {
+		height: 500px;
+	}
+	.carousel img {
+		width: auto;
+		height: 500px;
+	}
+
+	.featurette {
+		height: auto;
+		padding: 0;
+	}
+	.featurette-image.pull-left, .featurette-image.pull-right {
+		display: block;
+		float: none;
+		max-width: 40%;
+		margin: 0 auto 20px;
+	}
+}
+
+/* Search input */
+
+#custom-search-form {
+    margin:0;
+    margin-top: 5px;
+    padding: 0;
+    
+    i {
+        color: #000;
+    }
+}
+
+#custom-search-form .search-query {
+    padding-right: 3px;
+    padding-right: 4px \9;
+    padding-left: 3px;
+    padding-left: 4px \9;
+    /* IE7-8 doesn't have border-radius, so don't indent the padding */
+
+    margin-bottom: 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+#custom-search-form button {
+    border: 0;
+    background: none;
+    /** belows styles are working good */
+    padding: 2px 5px;
+    margin-top: 2px;
+    position: relative;
+    left: -28px;
+    /* IE7-8 doesn't have border-radius, so don't indent the padding */
+    margin-bottom: 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.search-query:focus + button {
+    z-index: 3;   
+}
+
+/* video-stats */
+
+#video-stats {
+    height: 50px;
+}

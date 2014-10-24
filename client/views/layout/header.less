@@ -1,0 +1,60 @@
+@import "../common/stylesheets/variables.lessimport";
+
+.navbar-inverse {
+  background-color: @greyHeader;
+  li {
+    border-left: 1px solid @blackBorderNav;
+    border-right: 1px solid @blackBorderNav;
+    padding: 0 10px;
+  }
+  .coderstv-novo-smaller-v2 {
+    background: url(/images/sprites-s2b2e9f1790.png) no-repeat;
+    background-position: 0 -67px;
+    width: 166px;
+    height: 30px;
+    display: inline-block;
+    vertical-align: text-top;
+    margin-top: 18px;
+    margin-right: 20px;
+  }
+  .navbar-nav > li > a {
+    color: #CCC;
+    .fa {
+      margin-right: 10px;
+    }
+  }
+  .navbar-nav > li:hover,
+  .navbar-nav > li:focus,
+  .navbar-nav > li.active {
+    background-color: #3D3D3D; 
+    .box-shadow(0 5px 0, @yellowHeaderShadow);
+    i {
+      color: @yellowHeaderShadow;
+    }
+  }
+  .navbar-nav > li > a:hover,
+  .navbar-nav > li > a:focus {
+    color: #CCC;
+    background-color: transparent;
+  }
+
+  #sign-in {
+    padding-top: 26px;
+    margin-top: -10px;
+    padding-bottom: 15px;
+  }
+
+  #sign-out {
+    margin: 0;
+    font-size: 15px;
+    padding-right: 0px;
+  }
+
+  .user-bar-avatar > img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50px;
+    margin: -20px -20px -20px -10px;
+  }
+}
+

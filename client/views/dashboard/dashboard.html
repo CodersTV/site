@@ -1,0 +1,184 @@
+<template name="dashboard">
+  <div class="row">
+    <div class="container-fluid content-header">
+      <div class="container">
+        <h1 class="oswald text-muted">Start a <em class="text-color">broadcast</em></h1>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      {{#if isBroadcasting}}
+      {{#with isBroadcasting}}
+      <div class="alert alert-success">
+          <button type="button" class="close" data-dismiss="alert">
+              &times;
+          </button>
+          <h4>You are live!</h4>
+          <p>
+              Spread the link: <a href="{{getCoderChannelURL MeteorUserId}}" id="username">{{ROOT_URL}}{{getCoderChannelURL MeteorUserId}}</a>
+          </p>
+      </div>
+      {{/with}}
+      {{/if}}
+
+      <div class="alert alert-danger" style="display: none;">
+          <button type="button" class="close" data-dismiss="alert">
+              &times;
+          </button>
+          <h4>Something went wrong!</h4>
+          <p></p>
+      </div>
+      <div id="alert-dialog-success" class="alert alert-success" style="display: none;">
+          <button type="button" class="close" data-dismiss="alert">
+              &times;
+          </button>
+          <h4>Alright!</h4>
+          <p></p>
+      </div>
+
+      <form id="create-channel" class="form-horizontal">
+        <fieldset>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-2 control-label" for="URL">
+              Hangout on Air link <br/>
+              <a href="https://coderstv.uservoice.com/knowledgebase/articles/199921-how-do-i-get-a-google-hangout-on-air-link-" target="_blank">(How can I get that ?)</a>
+            </label>  
+            <div class="col-md-4">
+              <input id="URL" name="URL" type="text" placeholder="Paste here. E.g.: http://youtu.be/rxfCPa8LUwQ" class="form-control input-md" required="">
+              <span class="help-block">
+                <a href="https://plus.google.com/hangouts/_?hso=0" target="_blank" style="text-decoration:none;">Click here to start a <img src="https://ssl.gstatic.com/s2/oz/images/stars/hangout/1/gplus-hangout-24x100-normal.png"
+                  alt="Hangout on Air"
+                  title="Hangout on Air"
+                  style="border:0;width:100px;height:24px;"/></a>
+              </span>  
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-2 control-label" for="language">Select Programming Language</label>  
+            <div class="col-md-6">
+              <input id="language" name="language" type="text" placeholder="E.g. Python" class="typeahead form-control input-md" autocomplete="on" spellcheck="off" required="" data-source="languages">
+            </div>
+          </div>
+
+          <!-- Textarea -->
+          <div class="form-group">
+            <label class="col-md-2 control-label" for="video-description">Video Description<br/>(supports Github Flavored Markdown)</label>
+            <div class="col-md-8">                     
+              <textarea class="form-control" id="video-description" name="video-description" rows="10">Give full description of your broadcast.
+For example, you can paste some code here with markdown tags and it will render pretty on the video page:
+
+```python
+def foo():
+  return 1
+```</textarea>
+            </div>
+          </div>
+
+          <!-- Button -->
+          <div class="form-group">
+            <label class="col-md-2 control-label" for="start-broadcast"></label>
+            <div class="col-md-4">
+              {{#if isBroadcasting}}
+              <button id="stop-broadcast" name="stop-broadcast" class="btn btn-danger">Stop broadcast</button>
+              {{else}}
+              <button id="start-broadcast" name="start-broadcast" class="btn btn-color">Start broadcast</button>
+              {{/if}}
+            </div>
+          </div>
+
+        </fieldset>
+      </form>
+ 
+    </div>
+    <hr />
+    <div class="row">
+      <h4>Your Past Broadcasts</h4>
+      <ul class="thumbnails">
+        {{#each pastList}}
+          {{> dashboard_video_thumb}}
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</template>
+
+<template name="preferences_video_thumb">
+    <li class="span4">
+        <div class="thumbnail">
+            <img src="http://img.youtube.com/vi/{{URL}}/hqdefault.jpg">
+            <div class="caption">
+                <h3 class="truncate">{{title}}</h3>
+                <h4 class="truncate">
+                    {{#with getUser owner}}
+                        {{profile.name}}
+                    {{/with}}
+                </h4>
+                <p>
+                    {{language}}
+                </p>
+                <!-- <span><i class="icon-eye-open"></i> {{visualizations}}</span> -->
+                <p align="center">
+                    <a href="{{getVideoUrl owner _id}}" class="btn btn-primary btn-block">Watch</a>
+                </p>
+                <p align="center">
+                    <a class="btn btn-danger btn-block remove-video" id="{{_id}}">Remove</a>
+                </p>
+            </div>
+        </div>
+    </li>
+</template>
+
+<template name="dashboard_video_thumb">
+  <div class="col-md-4 col-sm-4 text-center">
+    <div class="thumbnail">
+      {{#if isLive}}
+      <legend class="video-live video-status">
+        Live 
+      </legend>
+      {{else}}
+      <legend class="video-status">
+        Finished
+      </legend>
+      {{/if}}
+      <div class="image">
+        <a href="{{getVideoUrl owner _id}}" class="video-title-link">
+          <img src="http://img.youtube.com/vi/{{URL}}/hqdefault.jpg" class="img-responsive" alt="{{title}}" title="{{title}}">
+        </a>
+      </div>
+      <div class="caption">
+        <h4 class="truncate text-color" title="{{title}}" alt="{{title}}">{{title}}</h4>
+        <p class="truncate">
+          {{#with getUser owner}}
+          <img class="img-circle video-owner" onerror="this.src='{{defaultProfilePicture}}';this.removeAttribute('onerror');" src="{{superchat.pic_square}}" alt="{{profile.name}}" title="{{profile.name}}" />
+          {{profile.name}}
+          {{/with}}
+        </p>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <p class="pull-left"><i class="fa fa-code"></i>{{language}}</p>
+            <p class="pull-right">
+              <i class="fa fa-calendar"></i>
+              {{#if isLive}}
+              Live
+              {{else}}
+              {{fromNow finishedAt}}
+              {{/if}}
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-12 text-center">
+            <p class="watch-video">
+              <a class="btn btn-danger remove-video">Remove</a>
+            </p>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,8 @@
+{
+    "name": "users-counter",
+    "description": "Count users online",
+    "homepage": "https://github.com/gabrielhpugliese/meteor-users-counter",
+    "author": "Gabriel Henrique Pugliese <gabrielhpugliese@gmail.com>",
+    "version": "0.1.0",
+    "git": "https://github.com/gabrielhpugliese/meteor-users-counter"
+}
