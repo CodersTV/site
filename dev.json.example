@@ -1,0 +1,30 @@
+{
+  "public": {
+    "DEBUG": true,
+    "ga": "",
+    "siteapps": "",
+    "tokbox": {
+      "apiKey": ""
+    }
+  },
+  "apm": {
+    "appId": "",
+    "appSecret": ""
+  },
+  "tokbox": {
+    "apiKey": "",
+    "apiSecret": "",
+    "location": "127.0.0.1"
+  },
+  "google": {
+    "clientId": "",
+    "secret": ""
+  },
+  "mailgun": {
+    "MAIL_URL": ""
+  },
+  "disqus": {
+    "secret": "",
+    "public": ""
+  }
+}
