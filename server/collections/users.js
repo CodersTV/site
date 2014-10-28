@@ -87,24 +87,21 @@ Meteor.users.after.insert(function (userId, doc) {
   }
 });
 
-Meteor.users.after.insert(function (userId, doc) {
-  doc.funds = {
-    bitcoin: 0
-  };
-});
-
 Accounts.onLogin(function (info) {
   if (! info.user.services.google.refreshToken) return;
 
-  var profile = GPlus.getProfile(info.user);
-  var superchat = Meteor.users.saveSuperchatInfo(info.user, profile);
+  Fiber(function () {
+    debug('Saving user profile. User _id: ' + info.user._id);
+    var profile = GPlus.getProfile(info.user);
+    var superchat = Meteor.users.saveSuperchatInfo(info.user, profile);
 
-  try {
-    Meteor.users.update({ _id: info.user._id }, { $set: {
-      gplus: profile,
-      superchat: superchat
-    }});
-  } catch (err) {
-    debug('Could not save user profile on login. Reason:', err);
-  }
+    try {
+      Meteor.users.update({ _id: info.user._id }, { $set: {
+        gplus: profile,
+        superchat: superchat
+      }});
+    } catch (err) {
+      debug('Could not save user profile on login. Reason:', err);
+    }
+  }).run();
 });
