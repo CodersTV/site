@@ -83,8 +83,11 @@ Router.map(function () {
   this.route('index', {
     controller: BasicController,
     path: '/',
-    beforeAction: function () {
-      Meteor.subscribe('Channels');
+    waitOn: function () {
+      return [
+        Meteor.subscribe('Channels'),
+        Meteor.subscribe('Users')
+      ];
     }
   });
 
