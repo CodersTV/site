@@ -38,7 +38,7 @@ Router.onAfterAction(function setPath () {
 
 Deps.autorun(function () {
   var nextPage = Session.get('nextPage');
-  if (Meteor.user() && nextPage) {
+  if(Meteor.user() && nextPage) {
     Session.set('nextPage', null);
     Router.go(nextPage);
     this.stop();
@@ -83,11 +83,8 @@ Router.map(function () {
   this.route('index', {
     controller: BasicController,
     path: '/',
-    waitOn: function () {
-      return [
-        Meteor.subscribe('Channels'),
-        Meteor.subscribe('Languages')
-      ]
+    beforeAction: function () {
+      Meteor.subscribe('Channels');
     }
   });
 
