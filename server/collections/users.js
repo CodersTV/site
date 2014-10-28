@@ -5,6 +5,7 @@
  *  }
  */
 var debug = Meteor.require('debug')('ct:server:users.js');
+var Fiber = Npm.require('fibers');
 BetaUsers = new Meteor.Collection('betaUsers');
 
 Meteor.users.allow({
