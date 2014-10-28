@@ -38,7 +38,7 @@ Router.onAfterAction(function setPath () {
 
 Deps.autorun(function () {
   var nextPage = Session.get('nextPage');
-  if (Meteor.user() && nextPage) {
+  if(Meteor.user() && nextPage) {
     Session.set('nextPage', null);
     Router.go(nextPage);
     this.stop();
@@ -86,8 +86,8 @@ Router.map(function () {
     waitOn: function () {
       return [
         Meteor.subscribe('Channels'),
-        Meteor.subscribe('Languages')
-      ]
+        Meteor.subscribe('Users')
+      ];
     }
   });
 
