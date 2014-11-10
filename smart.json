@@ -98,6 +98,9 @@
       "git": "https://github.com/EventedMind/iron-dynamic-template.git",
       "tag": "v0.2.1"
     },
-    "kadira": {}
+    "kadira": {
+      "git": "git@github.com:meteorhacks/kadira.git",
+      "tag": "v2.12.0"
+    }
   }
 }

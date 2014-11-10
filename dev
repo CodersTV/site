@@ -62,9 +62,9 @@ DEPLOY="
 cd $APP_DIR;
 cd $APP_NAME;
 sudo npm -g update meteorite;
-sudo git checkout $GIT_BRANCH;
 sudo git fetch --all;
 sudo git reset --hard origin/$GIT_BRANCH;
+sudo git checkout $GIT_BRANCH;
 sudo rm -rf ../dev-bundle;
 sudo rm -rf ../dev-bundle.tgz;
 sudo $METEOR_CMD update --force;
