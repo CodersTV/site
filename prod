@@ -78,7 +78,7 @@ cd ..;
 sudo tar -zxvf bundle.tgz;
 pm2 delete prod;
 mongo $APP_NAME $APP_DIR/$APP_NAME/mongo.config;
-METEOR_SETTINGS=\$(cat ${APP_DIR}/${APP_NAME}/prod.json) DEBUG=* PORT=80 ROOT_URL=$ROOT_URL MONGO_URL=$MONGO_URL pm2 start bundle/main.js -x --name 'prod';
+METEOR_SETTINGS=\$(cat ${APP_DIR}/${APP_NAME}/prod.json) DEBUG=ct:* PORT=80 ROOT_URL=$ROOT_URL MONGO_URL=$MONGO_URL pm2 start bundle/main.js -x --name 'prod';
 "
 
 function run {

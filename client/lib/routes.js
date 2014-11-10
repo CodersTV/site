@@ -161,7 +161,10 @@ Router.map(function () {
   this.route('preferences', {
     controller: LoggedUserController,
     waitOn: function () {
-      return Meteor.subscribe('Followers');            
+      return [
+        Meteor.subscribe('Followers'),
+        Meteor.subscribe('Users')
+      ];
     }
   });
 
