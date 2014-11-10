@@ -8,10 +8,6 @@ ScheduleController = FastRender.RouteController.extend({
   data: function () {
   },
 
-  action: function () {
-    this.render();
-  },
-
   onBeforeAction: function () {
     if (! Meteor.user()) {
       this.redirect(Router.routes.login.path());

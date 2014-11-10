@@ -8,10 +8,6 @@ AgendaController = FastRender.RouteController.extend({
 
   data: function () {
     return Schedule.findOne();
-  },
-
-  action: function () {
-    this.render();
   }
 
 });
