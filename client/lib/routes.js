@@ -82,11 +82,9 @@ Router.onAfterAction(function scrollWindowTopOnPageChange () {
 Router.map(function () {
   this.route('index', {
     path: '/',
-    waitOn: function () {
-      return [
-        Meteor.subscribe('Channels'),
-        Meteor.subscribe('Users')
-      ];
+    onBeforeAction: function () {
+      this.subscribe('Channels');
+      this.subscribe('Users');
     }
   });
 
