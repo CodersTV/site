@@ -1,4 +1,4 @@
-AgendaListController = FastRender.RouteController.extend({
+AgendaListController = RouteController.extend({
   waitOn: function () {
     return [
       Meteor.subscribe('schedule', null, true),
@@ -7,9 +7,6 @@ AgendaListController = FastRender.RouteController.extend({
   },
 
   data: function () {
-  },
-
-  action: function () {
-    this.render();
   }
+
 });

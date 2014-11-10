@@ -1,4 +1,4 @@
-BasicController = FastRender.RouteController.extend({
+BasicController = RouteController.extend({
   beforeAction: function () {
     Meteor.subscribe('Users')
   }

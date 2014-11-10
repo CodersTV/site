@@ -22,7 +22,7 @@ function getCurrentCoder (coderId) {
 }
 
 
-ChannelController = FastRender.RouteController.extend({
+ChannelController = RouteController.extend({
   waitOn: function () {
     var path = Path.get(true);
 

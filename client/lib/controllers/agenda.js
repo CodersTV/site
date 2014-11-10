@@ -1,4 +1,4 @@
-AgendaController = FastRender.RouteController.extend({
+AgendaController = RouteController.extend({
   waitOn: function () {
     return [
       Meteor.subscribe('schedule', this.params._id),
