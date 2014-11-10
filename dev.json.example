@@ -1,19 +1,19 @@
 {
   "public": {
     "DEBUG": true,
-    "ga": "",
-    "siteapps": "",
+    "ga": "OPTIONAL",
+    "siteapps": "OPTIONAL",
     "tokbox": {
-      "apiKey": ""
+      "apiKey": "OPTIONAL"
     }
   },
-  "apm": {
+  "kadira": {
     "appId": "",
     "appSecret": ""
   },
   "tokbox": {
-    "apiKey": "",
-    "apiSecret": "",
+    "apiKey": "OPTIONAL",
+    "apiSecret": "OPTIONAL",
     "location": "127.0.0.1"
   },
   "google": {
