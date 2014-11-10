@@ -91,7 +91,7 @@ Meteor.users.after.insert(function (userId, doc) {
 Accounts.onLogin(function (info) {
   if (! info.user.services.google.refreshToken) return;
 
-  Fiber(function () {
+  Meteor.setTimeout(function () {
     debug('Saving user profile. User _id: ' + info.user._id);
     var profile = GPlus.getProfile(info.user);
     var superchat = Meteor.users.saveSuperchatInfo(info.user, profile);
@@ -104,5 +104,5 @@ Accounts.onLogin(function (info) {
     } catch (err) {
       debug('Could not save user profile on login. Reason:', err);
     }
-  }).run();
+  }, 0);
 });

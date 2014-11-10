@@ -81,7 +81,6 @@ Router.onAfterAction(function scrollWindowTopOnPageChange () {
 
 Router.map(function () {
   this.route('index', {
-    controller: BasicController,
     path: '/',
     waitOn: function () {
       return [
@@ -131,23 +130,14 @@ Router.map(function () {
     path: '/agenda/:_id'
   });
 
-  //this.route('language', {
-  //    controller: 'LanguageController',
-  //    path: '/language/:language'
-  //});
-
-  //this.route('languagesList', {
-  //    controller: 'LanguageController',
-  //    template: 'languages',
-  //    path: '/languages'
-  //});
-
   this.route('loading');
 
   this.route('dashboard', {
     controller: LoggedUserController,
     onBeforeAction: function () {
-      document.title = 'Dashboard' + TITLE;
+      if (Meteor.isClient) {
+        document.title = 'Dashboard' + TITLE;
+      }
     },
     waitOn: function () {
       return [
