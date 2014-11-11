@@ -7,15 +7,8 @@ Router.configure({
   },
   // TODO: refactor templates to upperCamelCase
   //templateNameConverter: 'upperCamelCase',
-  routeControllerNameConverter: 'upperCamelCase'
-});
-
-Router.onRun(function renderLoadingSpin () {
-  if (this.ready()) {
-    this.render();
-  } else {
-    this.render('loading');
-  }
+  routeControllerNameConverter: 'upperCamelCase',
+  loadingTemplate: 'loading'
 });
 
 Router.onBeforeAction(function setTitle () {
