@@ -5,4 +5,4 @@ Meteor.publish('Users', function () {
 Meteor.publish('UserFunds', function () {
   if (! this.userId) { return []; }
   return Meteor.users.find({ _id: this.userId }, { fields: { funds: 1 } });
-})
+});

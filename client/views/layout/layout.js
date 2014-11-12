@@ -1,19 +1,3 @@
-//Meteor.setInterval(function () {
-//    if (!Meteor.router)
-//        return;
-//
-//    var active = _.find($('.nav-list li a'), function (item) {
-//        return $(item).attr('href') === Meteor.router.path();
-//    });
-//
-//    if ($(active).attr('href') == $($('.nav-list li.active a')[0]).attr('href')) {
-//        return;
-//    }
-//
-//    $('.nav-list li.active').removeClass('active');
-//    $(active).parent().addClass('active');
-//}, 500);
-
 Template.layout.styleLoginButtons = function () {
   var $loginButtons = this.$('#login-buttons');
   $loginButtons.addClass('btn btn-info');

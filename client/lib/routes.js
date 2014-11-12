@@ -11,6 +11,14 @@ Router.configure({
   loadingTemplate: 'loading'
 });
 
+Router.onAfterAction(function () {
+  if (! this.ready()) {
+    this.render('loading');
+  } else {
+    this.render();
+  }
+});
+
 Router.onBeforeAction(function setTitle () {
   document.title = 'Watch programming videos or broadcast your coder skills with the world | CodersTV';
 });
@@ -75,9 +83,11 @@ Router.onAfterAction(function scrollWindowTopOnPageChange () {
 Router.map(function () {
   this.route('index', {
     path: '/',
-    onBeforeAction: function () {
-      this.subscribe('Channels');
-      this.subscribe('Users');
+    waitOn: function () {
+      return [
+        Meteor.subscribe('Channels'),
+        Meteor.subscribe('Users')
+      ];
     }
   });
 
