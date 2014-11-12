@@ -10,11 +10,11 @@ Router.configure({
   routeControllerNameConverter: 'upperCamelCase'
 });
 
-Router.onRun(function renderLoadingSpin () {
-  if (this.ready()) {
-    this.render();
-  } else {
+Router.onAfterAction(function () {
+  if (! this.ready()) {
     this.render('loading');
+  } else {
+    this.render();
   }
 });
 
@@ -82,9 +82,11 @@ Router.onAfterAction(function scrollWindowTopOnPageChange () {
 Router.map(function () {
   this.route('index', {
     path: '/',
-    onBeforeAction: function () {
-      this.subscribe('Channels');
-      this.subscribe('Users');
+    waitOn: function () {
+      return [
+        Meteor.subscribe('Channels'),
+        Meteor.subscribe('Users')
+      ];
     }
   });
 
