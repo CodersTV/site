@@ -13,3 +13,17 @@ Meteor.publish('Channels', function (searchText) {
     sort: {finishedAt: 1, createdAt: 1}
   });
 });
+
+Meteor.publishComposite('ChannelsWithUsers', {
+  find: function () {
+    return Channels.find({}, {sort: {finishedAt: 1, createdAt: 1}});
+  },
+  children: [{
+    find: function (channel) {
+      return Meteor.users.find({ _id: channel.owner }, {
+        superchat: 1,
+        profile: 1
+      });
+    }
+  }]
+});

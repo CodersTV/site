@@ -101,6 +101,10 @@
     "kadira": {
       "git": "git@github.com:meteorhacks/kadira.git",
       "tag": "v2.12.0"
+    },
+    "publish-composite": {
+      "git": "git@github.com:englue/meteor-publish-composite.git",
+      "tag": "v1.2.2"
     }
   }
 }
