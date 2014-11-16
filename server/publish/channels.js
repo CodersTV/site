@@ -13,3 +13,36 @@ Meteor.publish('Channels', function (searchText) {
     sort: {finishedAt: 1, createdAt: 1}
   });
 });
+
+Meteor.publishComposite('FeaturedChannelWithUser', function () {
+  return {
+    find: function () {
+      return Channels.find({
+      }, {sort: {finishedAt: 1, createdAt: 1}});
+    },
+    children: [{
+      find: function (channel) {
+        return Meteor.users.find({ _id: channel.owner }, {
+          superchat: 1,
+          profile: 1
+        });
+      }
+    }]
+  };
+});
+
+Meteor.publishComposite('ChannelsWithUsers', function (limit) {
+  return {
+    find: function () {
+      return Channels.find({}, {sort: {finishedAt: 1, createdAt: 1}, limit: limit || 0});
+    },
+    children: [{
+      find: function (channel) {
+        return Meteor.users.find({ _id: channel.owner }, {
+          superchat: 1,
+          profile: 1
+        });
+      }
+    }]
+  };
+});

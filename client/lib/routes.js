@@ -84,8 +84,8 @@ Router.map(function () {
     path: '/',
     waitOn: function () {
       return [
-        Meteor.subscribe('Channels'),
-        Meteor.subscribe('Users')
+        Meteor.subscribe('ChannelsWithUsers', 3),
+        Meteor.subscribe('FeaturedChannelWithUser')
       ];
     }
   });
