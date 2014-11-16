@@ -49,6 +49,8 @@ Channels.sendFollowEmail = function (userId, doc) {
 Channels.before.insert(function (userId, doc) {
   check(doc.URL, String);
   check(doc.language, String);
+  check(doc.description, String);
+
   doc.isLive = true;
   doc.watchers = 0;
   doc.visualizations = 0;
