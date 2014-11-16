@@ -6,18 +6,18 @@ Meteor.methods({
   createChannel: function (form) {
     var shortRe = new RegExp('http://youtu.be/(.+)');
     var completeRe = new RegExp('^https?://w{0,3}\.?youtube\.com/watch\?.*v=(.*[^&])&?.*');
-    var match = shortRe.exec(form.URL) || completeRe.exec(form.URL);
+    var isYoutubeURL = shortRe.exec(form.URL) || completeRe.exec(form.URL);
     
-    if (! match) {
-      throw new Meteor.Error(400, 'Invalid URL.');
+    if (_.isEmpty(isYoutubeURL)) {
+      throw new Meteor.Error(400, 'Invalid Youtube URL.');
     }
     
-    var videoID = match[1];
+    var videoID = isYoutubeURL[1];
     var video = Youtube.getVideo(videoID);
     
-    if (video.snippet.tags && !_.contains(_.values(video.snippet.tags), '#hoa'))
-      throw new Meteor.Error(400, 'That URL does not seems to be a valid Hangout on Air.');
-    else if (video.kind != 'youtube#video')
+    //if (video.snippet.tags && !_.contains(_.values(video.snippet.tags), '#hoa'))
+    //  throw new Meteor.Error(400, 'That URL does not seems to be a valid Hangout on Air.');
+    if (video.kind !== 'youtube#video')
       throw new Meteor.Error(400, 'That URL does not seem a valid Youtube video.');
         
     return Channel.set({
