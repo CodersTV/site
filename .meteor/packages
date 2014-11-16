@@ -29,9 +29,9 @@ bootstrap-3
 service-configuration
 accounts-ui-unstyled
 collection-helpers
-typeahead
 reactive-path
 multiple-callbacks
 shareit
 kadira
 publish-composite
+tags

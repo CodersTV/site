@@ -51,8 +51,16 @@
         </p>
         <div class="row">
           <div class="col-md-12 text-center">
-            <p class="pull-left"><i class="fa fa-code"></i>{{language}}</p>
-            <p class="pull-right">
+              <p class="tags" title="{{language}}" alt="{{language}}"><i class="fa fa-tag"></i>
+              {{#each language}}
+                {{this}}
+              {{/each}}
+              </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="co-md-12 text-center">
+            <p>
               <i class="fa fa-calendar"></i>
               {{#if isLive}}
               Live
