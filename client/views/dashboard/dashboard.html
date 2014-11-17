@@ -59,15 +59,15 @@
 
           <!-- Text input-->
           <div class="form-group">
-            <label class="col-md-2 control-label" for="language">Select Programming Language</label>  
+            <label class="col-md-2 control-label" for="language">Add tags <small class="text-muted">(will be indexed on search)</small></label>  
             <div class="col-md-6">
-              <input id="language" name="language" type="text" placeholder="E.g. Python" class="typeahead form-control input-md" autocomplete="on" spellcheck="off" required="" data-source="languages">
+              <input id="language" name="language" type="text" placeholder="E.g. Python" class="form-control input-md" autocomplete="on" spellcheck="off" required="" data-role="tagsinput">
             </div>
           </div>
 
           <!-- Textarea -->
           <div class="form-group">
-            <label class="col-md-2 control-label" for="video-description">Video Description<br/>(supports Github Flavored Markdown)</label>
+            <label class="col-md-2 control-label" for="video-description">Video Description<br/><small class="text-muted">(supports Github Flavored Markdown)</small></label>
             <div class="col-md-8">                     
               <textarea class="form-control" id="video-description" name="video-description" rows="10">Give full description of your broadcast.
 For example, you can paste some code here with markdown tags and it will render pretty on the video page:
@@ -98,11 +98,13 @@ def foo():
     <hr />
     <div class="row">
       <h4>Your Past Broadcasts</h4>
-      <ul class="thumbnails">
-        {{#each pastList}}
-          {{> dashboard_video_thumb}}
-        {{/each}}
-      </ul>
+      <div class="container">
+        <div class="row video-list">
+          {{#each pastList}}
+            {{> video_thumb}}
+          {{/each}}
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -119,7 +121,9 @@ def foo():
                     {{/with}}
                 </h4>
                 <p>
-                    {{language}}
+                    {{#each language}}
+                      {{this}}
+                    {{/each}}
                 </p>
                 <!-- <span><i class="icon-eye-open"></i> {{visualizations}}</span> -->
                 <p align="center">

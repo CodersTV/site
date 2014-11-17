@@ -51,6 +51,7 @@ Channels.before.insert(function (userId, doc) {
   check(doc.language, String);
   check(doc.description, String);
 
+  doc.language = doc.language.split(',');
   doc.isLive = true;
   doc.watchers = 0;
   doc.visualizations = 0;

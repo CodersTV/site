@@ -62,10 +62,6 @@
       "git": "https://github.com/dburles/meteor-collection-helpers.git",
       "tag": "v0.3.1"
     },
-    "typeahead": {
-      "git": "https://github.com/sergeyt/meteor-typeahead.git",
-      "tag": "v0.0.12"
-    },
     "reactive-path": {
       "git": "https://github.com/gabrielhpugliese/meteor-reactive-path",
       "tag": "v0.1.4"
@@ -105,6 +101,10 @@
     "publish-composite": {
       "git": "git@github.com:englue/meteor-publish-composite.git",
       "tag": "v1.2.2"
+    },
+    "tags": {
+      "git": "git@github.com:patrickleet/meteor-tags.git",
+      "tag": "v1.3"
     }
   }
 }

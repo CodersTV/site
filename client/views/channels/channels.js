@@ -1,4 +1,12 @@
 
+Template.video_thumb.rendered = function () {
+  this.$('.tags').each(function (i, tag) {
+    $clamp(tag, { 
+      clamp: 1
+    });
+  });
+};
+
 Template.channels.liveList = function () {
     return Channels.find({isLive : true}, {sort: {watchers: 1}});
 };
