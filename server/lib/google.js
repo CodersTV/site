@@ -87,7 +87,7 @@ GPlus = {};
     var client = Youtube.getClient();
     var oauth2Client = Google.getOAuth2Client(user);
     var video = Async.runSync(function (done) {
-      var params = { id: videoID, part: 'snippet,status' };
+      var params = { id: videoID, part: 'snippet,status,contentDetails' };
 
       client.youtube.videos
         .list(params)

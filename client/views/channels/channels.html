@@ -40,6 +40,11 @@
           <img src="http://img.youtube.com/vi/{{URL}}/hqdefault.jpg" class="img-responsive" alt="{{title}}" title="{{title}}">
         </a>
         {{/if}}
+        {{#if duration}}
+        <div class="duration">
+          {{duration.minutes}}:{{duration.seconds}}
+        </div>
+        {{/if}}
       </div>
       <div class="caption">
         <h4 class="truncate text-color" title="{{title}}" alt="{{title}}">{{title}}</h4>

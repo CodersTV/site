@@ -28,9 +28,10 @@ Meteor.setInterval(function () {
 
     var status = video.status;
     var tags = video.snippet.tags;
+    var duration = video.contentDetails.duration;
 
     if (status.uploadStatus === 'processed') {
-      Channel.unset(channel._id);
+      Channels.updateProcessed(channel._id, duration);
     }
   });
 }, CLEANUP_INTERVAL);
