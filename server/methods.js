@@ -3,9 +3,6 @@ Meteor.methods({
   getVideo: function (videoID) {
     return Youtube.getVideo(videoID);
   }, 
-  updateVideo: function (_id, duration) {
-    Channels.updateProcessed(_id, duration);
-  },
   createChannel: function (form) {
     var shortRe = new RegExp('http://youtu.be/(.+)');
     var completeRe = new RegExp('^https?://w{0,3}\.?youtube\.com/watch\?.*v=(.*[^&])&?.*');
