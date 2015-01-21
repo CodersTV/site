@@ -42,10 +42,7 @@
         {{/if}}
         {{#if duration}}
         <div class="duration">
-          {{#if duration.hours}}
-            {{duration.hours}}:
-          {{/if}}
-          {{duration.minutes}}:{{duration.seconds}}
+          {{#if $gt duration.hours 0}}{{duration.hours}}:{{/if}}{{duration.minutes}}:{{duration.seconds}}
         </div>
         {{/if}}
       </div>
