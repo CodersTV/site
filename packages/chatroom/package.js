@@ -7,7 +7,7 @@ Package.on_use(function (api, where) {
     api.use([
             'meteor',
             'standard-app-packages',
-            'presence', 
+            'presence',
             'streams'
     ], both);
 
@@ -26,7 +26,6 @@ Package.on_use(function (api, where) {
     ], both);
 
     api.add_files([
-                  'client/lib/startup.js',
                   'client/lib/helpers.js',
                   'client/stylesheets/superchat.less',
                   'client/views/chatroom.html',
@@ -44,6 +43,7 @@ Package.on_use(function (api, where) {
 
     if (typeof api.export !== 'undefined') {
         api.imply('reactive-path');
+        api.imply('publish-composite');
         api.export('Superchat', both);
     }
 

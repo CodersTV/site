@@ -1,10 +1,5 @@
 superChatStream = new Meteor.Stream('superChatStream');
 
-// SuperChat stuff
-Meteor.publish('usersSuperChat', function(){
-    return Meteor.users.find({}, {fields: {superchat: true}});
-});
-
 superChatStream.permissions.read(function (eventName) {
     return true;
 });
@@ -27,7 +22,7 @@ superChatStream.addFilter(function (eventName, args) {
     var user = Meteor.users.findOne({_id: this.userId}),
         message = args[0];
 
-    if (! this.userId || 
+    if (! this.userId ||
         (typeof user.superchat.canChat !== 'undefined' && !user.superchat.canChat),
         message.length === 0) {
         return [];
@@ -41,8 +36,8 @@ superChatStream.addFilter(function (eventName, args) {
         if (now - lastMessageOn <= 1000) {
             Meteor.users.update({_id: user._id}, {
                 $set: {
-                    'superchat.lastMessageOn': +(new Date()), 
-                    'superchat.canChat': false,                                                                                                                                                                      
+                    'superchat.lastMessageOn': +(new Date()),
+                    'superchat.canChat': false,
                     'superchat.whenCanChat': now + (60 * 1000)
                 }
             });
@@ -56,7 +51,7 @@ superChatStream.addFilter(function (eventName, args) {
             $set: {'superchat.lastMessageOn': +(new Date())},
             $inc: {'superchat.messagesInRow': 1}
         });
-    }  
+    }
 
     args.push('says');
     return args;

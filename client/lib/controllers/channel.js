@@ -5,10 +5,17 @@ CoderController = RouteController.extend({
   },
   onAfterAction: function () {
     var coder = Meteor.users.findOneFromCoderId(this.params.coderId);
-
-    Meteor.subscribe('userPresence',
-                     coder.profile.username,
-                     coder._id)
+    if (! _.isEmpty(coder)) {
+      Session.set('coder', coder);
+      Meteor.subscribe(
+        'userPresenceWithProfile',
+        coder.profile.username,
+        coder._id,
+        function () {
+          Session.set('chatSubsReady', true);
+        }
+      );
+    }
   }
 });
 
