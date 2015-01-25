@@ -91,20 +91,17 @@ Router.map(function () {
   });
 
   this.route('coder', {
-    controller: ChannelController,
-    template: 'channel',
+    controller: CoderController,
     path: '/coder/:coderId'
   });
 
   this.route('codersList', {
-    controller: ChannelController,
-    template: 'channels',
+    controller: CoderListController,
     path: '/coders'
   });
 
   this.route('video', {
-    controller: ChannelController,
-    template: 'channel',
+    controller: VideoController,
     path: '/video/:coderId/:videoId'
   });
 
@@ -133,19 +130,7 @@ Router.map(function () {
   this.route('loading');
 
   this.route('dashboard', {
-    controller: LoggedUserController,
-    onBeforeAction: function () {
-      if (Meteor.isClient) {
-        document.title = 'Dashboard' + TITLE;
-      }
-    },
-    waitOn: function () {
-      return [
-        Meteor.subscribe('Languages'),
-        Meteor.subscribe('Users'),
-        Meteor.subscribe('Channels')
-      ];
-    }
+    controller: DashboardController
   });
 
   this.route('preferences', {

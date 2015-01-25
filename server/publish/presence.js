@@ -1,14 +1,21 @@
-Meteor.publish('userPresence', function (whereAt) {
-  if (_.isEmpty(whereAt)) {
+Meteor.publish('userPresence', function (coderUsername, coderId) {
+  var filter, presences;
+
+  if (_.isEmpty(coderUsername) && _.isEmpty(coderId)) {
     this.ready();
     return;
   }
 
-  check(whereAt, String);
-  var filter = {'state.whereAt': whereAt};
+  if (coderUsername) {
+    check(coderUsername, String);
+  } else {
+    check(coderId, String);
+  }
 
-  var presences = Presences.find(filter, {fields: {state: true, userId: true}});
-
-  return presences;
+  filter = {$or: [
+    {'state.whereAt': '/coder/' + coderUsername},
+    {'state.whereAt': '/coder/' + coderId}
+  ]};
+  return Presences.find(filter, {fields: {state: true, userId: true}});
 });
 

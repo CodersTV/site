@@ -1,57 +1,30 @@
-function getCurrentCoder (coderId) {
-  if (! coderId) {
-    return {
-      userId: coderId
-    };
-  }
-
-  var user = Meteor.users.findOne({'profile.username': coderId}),
-  currentCoder = {coderId: coderId};
-
-  if (user) {
-    return {
-      userId: user._id,
-      username: coderId,
-      name: user.profile.name
-    };
-  }
-
-  return {
-    userId: coderId
-  };
-}
-
-
-ChannelController = RouteController.extend({
+CoderController = RouteController.extend({
+  template: 'channel',
   waitOn: function () {
-    var path = Path.get(true);
-
-    return [
-      Meteor.subscribe('userPresence', path),
-      Meteor.subscribe('Channels', Session.get('channelSearchQuery')),
-      Meteor.subscribe('Users'),
-      Meteor.subscribe('Followers'),
-    ];
+    return Meteor.subscribe('ChannelWithOwnerAndFollowers', this.params.coderId);
   },
-  onBeforeAction: function () {
-    var coderId = this.params.coderId;
-    var videoId = this.params.videoId;
-    var currentCoder = getCurrentCoder(coderId);
-    var currentVideo = Channel.get(currentCoder.userId, videoId);
-    var title = TITLE;
+  onAfterAction: function () {
+    var coder = Meteor.users.findOneFromCoderId(this.params.coderId);
 
-    Session.set('channelSearchQuery', this.params.keyword);
-    Session.set('currentCoder', currentCoder.userId);
-    Session.set('currentUsername', currentCoder.username);
-    Session.set('currentVideo', videoId);
-    if (currentVideo) {
-      title = currentVideo.title + ' by ' + currentCoder.name + ' coding with ' + currentVideo.language + title;
-    } else if (currentCoder.name) {
-      title = currentCoder.name + title;
-    } else {
-      title = 'Coders' + title;
-    }
+    Meteor.subscribe('userPresence',
+                     coder.profile.username,
+                     coder._id)
+  }
+});
 
-    document.title = title;
+VideoController = RouteController.extend({
+  template: 'channel',
+  waitOn: function () {
+    return Meteor.subscribe('VideoWithOwnerAndFollowers', this.params.videoId);
+  },
+  data: function () {
+    return Channels.findOne({_id: this.params.videoId});
+  }
+});
+
+CoderListController = RouteController.extend({
+  template: 'channels',
+  waitOn: function () {
+    return Meteor.subscribe('ChannelsWithOwner');
   }
 });

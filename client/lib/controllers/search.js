@@ -1,9 +1,7 @@
-SearchController = ChannelController.extend({
+SearchController = CoderListController.extend({
   template: 'channels',
-  onBeforeAction: function () {
-    var keyword = this.params.keyword;
-    Session.set('channelSearchQuery', keyword);
-    document.title = 'Searching for ' + keyword + TITLE;
+  waitOn: function () {
+    return Meteor.subscribe('ChannelsSearchWithUsers', this.params.keyword);
   }
 });
 

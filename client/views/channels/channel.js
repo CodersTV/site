@@ -127,20 +127,7 @@ Deps.autorun(function disqus () {
 
 
 Template.channel.getChannel = function() {
-  var currentCoder = Session.get('currentCoder'), 
-  currentVideo = Session.get('currentVideo'), 
-  filter = {};
-
-  if (currentCoder) {
-    filter.owner = currentCoder;
-  }
-  if (currentVideo) {
-    filter._id = currentVideo;
-    return Channels.findOne(filter);
-  }
-  filter.isLive = true;
-  return Channels.findOne(filter);
-
+  return Channels.findOne({});
 };
 
 Deps.autorun(function youtube (c) {
