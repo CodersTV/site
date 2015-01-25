@@ -101,86 +101,8 @@ def foo():
       <div class="container">
         <div class="row video-list">
           {{#each pastList}}
-            {{> video_thumb}}
+            {{> video_thumb withRemoveButton=true}}
           {{/each}}
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
-<template name="preferences_video_thumb">
-    <li class="span4">
-        <div class="thumbnail">
-            <img src="http://img.youtube.com/vi/{{URL}}/hqdefault.jpg">
-            <div class="caption">
-                <h3 class="truncate">{{title}}</h3>
-                <h4 class="truncate">
-                    {{#with getUser owner}}
-                        {{profile.name}}
-                    {{/with}}
-                </h4>
-                <p>
-                    {{#each language}}
-                      {{this}}
-                    {{/each}}
-                </p>
-                <!-- <span><i class="icon-eye-open"></i> {{visualizations}}</span> -->
-                <p align="center">
-                    <a href="{{getVideoUrl owner _id}}" class="btn btn-primary btn-block">Watch</a>
-                </p>
-                <p align="center">
-                    <a class="btn btn-danger btn-block remove-video" id="{{_id}}">Remove</a>
-                </p>
-            </div>
-        </div>
-    </li>
-</template>
-
-<template name="dashboard_video_thumb">
-  <div class="col-md-4 col-sm-4 text-center">
-    <div class="thumbnail">
-      {{#if isLive}}
-      <legend class="video-live video-status">
-        Live 
-      </legend>
-      {{else}}
-      <legend class="video-status">
-        Finished
-      </legend>
-      {{/if}}
-      <div class="image">
-        <a href="{{getVideoUrl owner _id}}" class="video-title-link">
-          <img src="http://img.youtube.com/vi/{{URL}}/hqdefault.jpg" class="img-responsive" alt="{{title}}" title="{{title}}">
-        </a>
-      </div>
-      <div class="caption">
-        <h4 class="truncate text-color" title="{{title}}" alt="{{title}}">{{title}}</h4>
-        <p class="truncate">
-          {{#with getUser owner}}
-          <img class="img-circle video-owner" onerror="this.src='{{defaultProfilePicture}}';this.removeAttribute('onerror');" src="{{superchat.pic_square}}" alt="{{profile.name}}" title="{{profile.name}}" />
-          {{profile.name}}
-          {{/with}}
-        </p>
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <p class="pull-left"><i class="fa fa-code"></i>{{language}}</p>
-            <p class="pull-right">
-              <i class="fa fa-calendar"></i>
-              {{#if isLive}}
-              Live
-              {{else}}
-              {{fromNow finishedAt}}
-              {{/if}}
-            </p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 col-sm-12 text-center">
-            <p class="watch-video">
-              <a class="btn btn-danger remove-video">Remove</a>
-            </p>
-          </div>  
         </div>
       </div>
     </div>
