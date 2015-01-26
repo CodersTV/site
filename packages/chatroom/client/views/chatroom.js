@@ -63,7 +63,6 @@ Template.chatroom.sendMsg = function () {
         coder = Session.get('coder'),
         host = coder._id;
 
-    debugger;
     Template.chatroom.removeLastMessage();
     superChatMsgs.insert({
       msg: message,
