@@ -15,6 +15,7 @@ CoderController = RouteController.extend({
           Session.set('chatSubsReady', true);
         }
       );
+      Session.set('currentCoder', coder._id);
     }
   }
 });

@@ -66,12 +66,15 @@ Meteor.publishComposite('ChannelWithOwnerAndFollowers', function (coderId) {
       });
 
       if (channels.count() === 0) {
-        // coderId is username
+        // coderId could be username
         var user = Meteor.users.findOne({'profile.username': coderId});
-        channels = Channels.find({
-          owner: user._id,
-          isLive: true
-        });
+
+        if (user) {
+          channels = Channels.find({
+            owner: user._id,
+            isLive: true
+          });
+        }
       }
 
       return channels;

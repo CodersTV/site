@@ -18,6 +18,10 @@ Router.onAfterAction(function () {
   }
 });
 
+Router.waitOn(function subscribeToSelf () {
+  Meteor.subscribe('SelfUser');
+});
+
 Router.onBeforeAction(function setTitle () {
   document.title = 'Watch programming videos or broadcast your coder skills with the world | CodersTV';
 });
@@ -84,7 +88,7 @@ Router.map(function () {
     path: '/',
     waitOn: function () {
       return [
-        Meteor.subscribe('ChannelsWithUsers', 3),
+        Meteor.subscribe('ChannelsWithOwner', 3),
         Meteor.subscribe('FeaturedChannelWithUser')
       ];
     }
