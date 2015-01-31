@@ -81,7 +81,10 @@ Template.dashboard.events({
         return Template.dashboard.alertError(err.reason);
       }
     });
-  },
+  }
+});
+
+Template.video_thumb_dashboard.events({
   'click a.remove-video': function (event) {
     var _id = this._id;
 
