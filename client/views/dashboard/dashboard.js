@@ -41,15 +41,19 @@ Template.dashboard.events({
   'click #create-channel button[name=start-broadcast]' : function (event) {
     event.preventDefault();
 
-    var form = {},
-    $formDiv = $('#create-channel'),
-    values = $formDiv.serializeArray();
+    var form = {};
+    var $target = $(event.target);
+    var $formDiv = $('#create-channel');
+    var values = $formDiv.serializeArray();
 
+    $target.attr('disabled', 'disabled');
     _.each(values, function (doc) {
       form[doc.name] = doc.value;
     });
 
     Meteor.call('createChannel', form, function (err) {
+      $target.removeAttr('disabled');
+
       if (err) {
         if (err.reason === 'Logout') {
           Meteor.logout();
@@ -77,7 +81,10 @@ Template.dashboard.events({
         return Template.dashboard.alertError(err.reason);
       }
     });
-  },
+  }
+});
+
+Template.video_thumb_dashboard.events({
   'click a.remove-video': function (event) {
     var _id = this._id;
 

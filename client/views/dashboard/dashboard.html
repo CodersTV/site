@@ -45,21 +45,22 @@
             <label class="col-md-2 control-label" for="URL">
               Hangout on Air link <br/>
               <a href="https://coderstv.uservoice.com/knowledgebase/articles/199921-how-do-i-get-a-google-hangout-on-air-link-" target="_blank">(How can I get that ?)</a>
-            </label>  
-            <div class="col-md-4">
+            </label>
+            <div class="col-md-5">
               <input id="URL" name="URL" type="text" placeholder="Paste here. E.g.: http://youtu.be/rxfCPa8LUwQ" class="form-control input-md" required="">
               <span class="help-block">
-                <a href="https://plus.google.com/hangouts/_?hso=0" target="_blank" style="text-decoration:none;">Click here to start a <img src="https://ssl.gstatic.com/s2/oz/images/stars/hangout/1/gplus-hangout-24x100-normal.png"
+                Click here to start a <a href="https://plus.google.com/hangouts/_?hso=0" target="_blank" style="text-decoration:none;"><img src="https://ssl.gstatic.com/s2/oz/images/stars/hangout/1/gplus-hangout-24x100-normal.png"
                   alt="Hangout on Air"
                   title="Hangout on Air"
                   style="border:0;width:100px;height:24px;"/></a>
-              </span>  
+                or <a href="https://www.youtube.com/my_live_events?action_create_live_event=1">Youtube Live Event (advanced)</a>
+              </span>
             </div>
           </div>
 
           <!-- Text input-->
           <div class="form-group">
-            <label class="col-md-2 control-label" for="language">Add tags <small class="text-muted">(will be indexed on search)</small></label>  
+            <label class="col-md-2 control-label" for="language">Add tags<br/><small class="text-muted">(will be indexed on search)</small></label>
             <div class="col-md-6">
               <input id="language" name="language" type="text" placeholder="E.g. Python" class="form-control input-md" autocomplete="on" spellcheck="off" required="" data-role="tagsinput">
             </div>
@@ -68,7 +69,7 @@
           <!-- Textarea -->
           <div class="form-group">
             <label class="col-md-2 control-label" for="video-description">Video Description<br/><small class="text-muted">(supports Github Flavored Markdown)</small></label>
-            <div class="col-md-8">                     
+            <div class="col-md-8">
               <textarea class="form-control" id="video-description" name="video-description" rows="10">Give full description of your broadcast.
 For example, you can paste some code here with markdown tags and it will render pretty on the video page:
 
@@ -93,7 +94,7 @@ def foo():
 
         </fieldset>
       </form>
- 
+
     </div>
     <hr />
     <div class="row">
@@ -101,7 +102,7 @@ def foo():
       <div class="container">
         <div class="row video-list">
           {{#each pastList}}
-            {{> video_thumb}}
+            {{> video_thumb_dashboard withRemoveButton=true video=this}}
           {{/each}}
         </div>
       </div>
@@ -109,40 +110,13 @@ def foo():
   </div>
 </template>
 
-<template name="preferences_video_thumb">
-    <li class="span4">
-        <div class="thumbnail">
-            <img src="http://img.youtube.com/vi/{{URL}}/hqdefault.jpg">
-            <div class="caption">
-                <h3 class="truncate">{{title}}</h3>
-                <h4 class="truncate">
-                    {{#with getUser owner}}
-                        {{profile.name}}
-                    {{/with}}
-                </h4>
-                <p>
-                    {{#each language}}
-                      {{this}}
-                    {{/each}}
-                </p>
-                <!-- <span><i class="icon-eye-open"></i> {{visualizations}}</span> -->
-                <p align="center">
-                    <a href="{{getVideoUrl owner _id}}" class="btn btn-primary btn-block">Watch</a>
-                </p>
-                <p align="center">
-                    <a class="btn btn-danger btn-block remove-video" id="{{_id}}">Remove</a>
-                </p>
-            </div>
-        </div>
-    </li>
-</template>
-
-<template name="dashboard_video_thumb">
+<template name="video_thumb_dashboard">
+  {{#with video}}
   <div class="col-md-4 col-sm-4 text-center">
     <div class="thumbnail">
       {{#if isLive}}
       <legend class="video-live video-status">
-        Live 
+        Live
       </legend>
       {{else}}
       <legend class="video-status">
@@ -150,9 +124,20 @@ def foo():
       </legend>
       {{/if}}
       <div class="image">
+        {{#if isLive}}
+        <a href="{{getCoderChannelURL owner}}" class="video-title-link">
+          <img src="http://img.youtube.com/vi/{{URL}}/hqdefault.jpg" class="img-responsive" alt="{{title}}" title="{{title}}">
+        </a>
+        {{else}}
         <a href="{{getVideoUrl owner _id}}" class="video-title-link">
           <img src="http://img.youtube.com/vi/{{URL}}/hqdefault.jpg" class="img-responsive" alt="{{title}}" title="{{title}}">
         </a>
+        {{/if}}
+        {{#if duration}}
+        <div class="duration">
+          {{#if $gt duration.hours 0}}{{duration.hours}}:{{/if}}{{duration.minutes}}:{{duration.seconds}}
+        </div>
+        {{/if}}
       </div>
       <div class="caption">
         <h4 class="truncate text-color" title="{{title}}" alt="{{title}}">{{title}}</h4>
@@ -164,8 +149,16 @@ def foo():
         </p>
         <div class="row">
           <div class="col-md-12 text-center">
-            <p class="pull-left"><i class="fa fa-code"></i>{{language}}</p>
-            <p class="pull-right">
+              <p class="tags" title="{{language}}" alt="{{language}}"><i class="fa fa-tag"></i>
+              {{#each language}}
+                {{this}}
+              {{/each}}
+              </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="co-md-12 text-center">
+            <p>
               <i class="fa fa-calendar"></i>
               {{#if isLive}}
               Live
@@ -178,11 +171,21 @@ def foo():
         <div class="row">
           <div class="col-md-12 col-sm-12 text-center">
             <p class="watch-video">
+              {{#if isLive}}
+              <a href="{{getCoderChannelURL owner}}" class="btn btn-lg btn-color btn-primary"><i class="fa fa-youtube-play"></i>Watch</a>
+              {{else}}
+              <a href="{{getVideoUrl owner _id}}" class="btn btn-lg btn-color btn-primary"><i class="fa fa-youtube-play"></i>Watch</a>
+              {{/if}}
+            </p>
+            {{#if ../withRemoveButton}}
+            <p class="remove-video">
               <a class="btn btn-danger remove-video">Remove</a>
             </p>
-          </div>  
+            {{/if}}
+          </div>
         </div>
       </div>
     </div>
   </div>
+  {{/with}}
 </template>
