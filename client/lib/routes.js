@@ -138,13 +138,7 @@ Router.map(function () {
   });
 
   this.route('preferences', {
-    controller: LoggedUserController,
-    waitOn: function () {
-      return [
-        Meteor.subscribe('Followers'),
-        Meteor.subscribe('Users')
-      ];
-    }
+    controller: PreferencesController
   });
 
   this.route('login', {

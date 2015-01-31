@@ -15,3 +15,9 @@ DashboardController = LoggedUserController.extend({
     return Meteor.subscribe('SelfVideos');
   }
 });
+
+PreferencesController = LoggedUserController.extend({
+  waitOn: function () {
+    return Meteor.subscribe('SelfFollowersWithProfiles');
+  }
+});
