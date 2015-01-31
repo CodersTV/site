@@ -1,7 +1,7 @@
 AgendaController = RouteController.extend({
   waitOn: function () {
     return [
-      Meteor.subscribe('schedule', this.params._id),
+      Meteor.subscribe('OneScheduleWithProfile', this.params._id),
       Meteor.subscribe('Followers')
     ];
   },

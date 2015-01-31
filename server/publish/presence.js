@@ -22,8 +22,8 @@ Meteor.publishComposite('userPresenceWithProfile', function (coderUsername, code
     },
     children: [{
       find: function (presence) {
-        if (presence.state.userId) {
-          return Meteor.users.find({_id: presence.state.userId});
+        if (presence.userId) {
+          return Meteor.users.find({_id: presence.userId});
         }
 
         this.ready();
