@@ -22,38 +22,6 @@ Meteor.users.allow({
   }
 });
 
-//Meteor.users.incVisualizations = function (userId) {
-//  var incremented = incrementCounter('user_' + userId + '_visualizations');
-//
-//  return this.update({ _id: userId }, { $set: 
-//    { 'profile.visualizations': incremented }
-//  });
-//};
-//
-//Meteor.users.decVisualizations = function (userId) {
-//  var incremented = incrementCounter('user_' + userId + '_visualizations');
-//
-//  return this.update({ _id: userId }, { $set: 
-//    { 'profile.visualizations': incremented }
-//  });
-//};
-
-
-Meteor.users.saveSuperchatInfo = function (user, profile) {
-  // backwards compatibility in chat
-  // TODO: remove this and use only gplusProfile
-  if (! profile) return;
-
-  var superchat = user.superchat || {};
-  superchat = _.extend(superchat, {
-    pic_square: profile.image.url.replace(/\?sz=50/, ''),
-    url: profile.url,
-    name: profile.name
-  });
-
-  return superchat;
-}
-
 Meteor.users.after.insert(function (userId, doc) {
   if (! doc.services.google.refreshToken) return;
 

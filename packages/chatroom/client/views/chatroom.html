@@ -10,7 +10,7 @@
         {{#each msgs}}
         <p>
           {{#with getProfile owner}}
-            <a href="{{url}}" target="_blank"><img class="img-circle" src="{{pic_square}}" onerror="this.src='{{defaultProfilePicture}}';this.removeAttribute('onerror');"/>{{name.givenName}} {{name.familyName}}</a>
+          <a href="{{url}}" target="_blank"><img class="img-circle" src="{{pic_square}}" onerror="this.src='{{defaultProfilePicture}}';this.removeAttribute('onerror');"/>{{#if name.givenName}}{{name.givenName}} {{name.familyName}}{{else}}{{displayName}}{{/if}}</a>
           {{/with}}
           {{action}}:
         </p>
