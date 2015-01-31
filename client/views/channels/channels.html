@@ -23,7 +23,7 @@
     <div class="thumbnail">
       {{#if isLive}}
       <legend class="video-live video-status">
-        Live 
+        Live
       </legend>
       {{else}}
       <legend class="video-status">
@@ -84,9 +84,15 @@
               <a href="{{getVideoUrl owner _id}}" class="btn btn-lg btn-color btn-primary"><i class="fa fa-youtube-play"></i>Watch</a>
               {{/if}}
             </p>
-          </div>  
+            {{#if withRemoveButton}}
+            <p class="remove-video">
+              <a class="btn btn-danger remove-video">Remove</a>
+            </p>
+            {{/if}}
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
