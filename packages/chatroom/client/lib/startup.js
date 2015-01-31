@@ -1,1 +1,0 @@
-usersSubs = Meteor.subscribe('usersSuperChat');

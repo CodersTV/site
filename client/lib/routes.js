@@ -18,6 +18,10 @@ Router.onAfterAction(function () {
   }
 });
 
+Router.waitOn(function subscribeToSelf () {
+  Meteor.subscribe('SelfUser');
+});
+
 Router.onBeforeAction(function setTitle () {
   document.title = 'Watch programming videos or broadcast your coder skills with the world | CodersTV';
 });
@@ -84,27 +88,24 @@ Router.map(function () {
     path: '/',
     waitOn: function () {
       return [
-        Meteor.subscribe('ChannelsWithUsers', 3),
+        Meteor.subscribe('ChannelsWithOwner', 3),
         Meteor.subscribe('FeaturedChannelWithUser')
       ];
     }
   });
 
   this.route('coder', {
-    controller: ChannelController,
-    template: 'channel',
+    controller: CoderController,
     path: '/coder/:coderId'
   });
 
   this.route('codersList', {
-    controller: ChannelController,
-    template: 'channels',
+    controller: CoderListController,
     path: '/coders'
   });
 
   this.route('video', {
-    controller: ChannelController,
-    template: 'channel',
+    controller: VideoController,
     path: '/video/:coderId/:videoId'
   });
 
@@ -133,19 +134,7 @@ Router.map(function () {
   this.route('loading');
 
   this.route('dashboard', {
-    controller: LoggedUserController,
-    onBeforeAction: function () {
-      if (Meteor.isClient) {
-        document.title = 'Dashboard' + TITLE;
-      }
-    },
-    waitOn: function () {
-      return [
-        Meteor.subscribe('Languages'),
-        Meteor.subscribe('Users'),
-        Meteor.subscribe('Channels')
-      ];
-    }
+    controller: DashboardController
   });
 
   this.route('preferences', {

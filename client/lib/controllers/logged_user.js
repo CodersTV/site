@@ -1,4 +1,4 @@
-LoggedUserController = BasicController.extend({
+LoggedUserController = RouteController.extend({
   onBeforeAction: function () {
     if (! Meteor.user()) {
       this.redirect(Router.routes.login.path());
@@ -6,5 +6,12 @@ LoggedUserController = BasicController.extend({
       this.stop();
       return;
     }
+  }
+});
+
+DashboardController = LoggedUserController.extend({
+  template: 'dashboard',
+  waitOn: function () {
+    return Meteor.subscribe('SelfVideos');
   }
 });

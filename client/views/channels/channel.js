@@ -1,3 +1,5 @@
+// This file is a mess :(
+
 // 3. This function creates an <iframe> (and YouTube player)
 //    after the API code downloads.
 // player = null;
@@ -104,12 +106,17 @@ Template.channel.LoadDisqusJS = function () {
   })();
 };
 
+Template.channel.getChannel = function() {
+  return Channels.findOne({});
+};
+
 Deps.autorun(function disqus () {
   var user = Meteor.user();
+  var channel = Template.channel.getChannel();
 
   if (Session.equals('channelRendered', false) ||
       Session.equals('disqusSSO', false) ||
-        Session.equals('currentVideo', undefined)) {
+      ! channel) {
     return;
   }
 
@@ -125,28 +132,11 @@ Deps.autorun(function disqus () {
   Template.channel.LoadDisqusJS();
 });
 
-
-Template.channel.getChannel = function() {
-  var currentCoder = Session.get('currentCoder'), 
-  currentVideo = Session.get('currentVideo'), 
-  filter = {};
-
-  if (currentCoder) {
-    filter.owner = currentCoder;
-  }
-  if (currentVideo) {
-    filter._id = currentVideo;
-    return Channels.findOne(filter);
-  }
-  filter.isLive = true;
-  return Channels.findOne(filter);
-
-};
-
 Deps.autorun(function youtube (c) {
   var channel = Template.channel.getChannel();
   if (Session.equals('YTApiReady', false) ||
-      Session.equals('channelRendered', false)) {
+      Session.equals('channelRendered', false) ||
+      ! channel) {
     return;
   }
 
@@ -154,10 +144,7 @@ Deps.autorun(function youtube (c) {
     if(! document.getElementById('player-div')) {
       return;
     }
-    var 
-      playerDiv = document.createElement('div'),
-      channel = Template.channel.getChannel()
-    ;
+    var playerDiv = document.createElement('div');
 
     playerDiv.id = 'player-div';
     document.getElementById('player-parent').innerHTML = '';
@@ -172,6 +159,10 @@ Deps.autorun(function youtube (c) {
 
     Meteor.clearInterval(interval);
   }, 100);
+
+  c.onInvalidate(function () {
+    Meteor.clearInterval(interval);
+  });
 });
 
 Template.info_row.watchers = function () {
@@ -180,7 +171,7 @@ Template.info_row.watchers = function () {
 
 Template.channel.getCoder = function() {
   return Meteor.users.findOne({
-    _id : Session.get('currentCoder')
+    _id: Session.get('currentCoder')
   });
 };
 
