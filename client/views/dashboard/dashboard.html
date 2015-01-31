@@ -45,21 +45,22 @@
             <label class="col-md-2 control-label" for="URL">
               Hangout on Air link <br/>
               <a href="https://coderstv.uservoice.com/knowledgebase/articles/199921-how-do-i-get-a-google-hangout-on-air-link-" target="_blank">(How can I get that ?)</a>
-            </label>  
-            <div class="col-md-4">
+            </label>
+            <div class="col-md-5">
               <input id="URL" name="URL" type="text" placeholder="Paste here. E.g.: http://youtu.be/rxfCPa8LUwQ" class="form-control input-md" required="">
               <span class="help-block">
-                <a href="https://plus.google.com/hangouts/_?hso=0" target="_blank" style="text-decoration:none;">Click here to start a <img src="https://ssl.gstatic.com/s2/oz/images/stars/hangout/1/gplus-hangout-24x100-normal.png"
+                Click here to start a <a href="https://plus.google.com/hangouts/_?hso=0" target="_blank" style="text-decoration:none;"><img src="https://ssl.gstatic.com/s2/oz/images/stars/hangout/1/gplus-hangout-24x100-normal.png"
                   alt="Hangout on Air"
                   title="Hangout on Air"
                   style="border:0;width:100px;height:24px;"/></a>
-              </span>  
+                or <a href="https://www.youtube.com/my_live_events?action_create_live_event=1">Youtube Live Event (advanced)</a>
+              </span>
             </div>
           </div>
 
           <!-- Text input-->
           <div class="form-group">
-            <label class="col-md-2 control-label" for="language">Add tags <small class="text-muted">(will be indexed on search)</small></label>  
+            <label class="col-md-2 control-label" for="language">Add tags<br/><small class="text-muted">(will be indexed on search)</small></label>
             <div class="col-md-6">
               <input id="language" name="language" type="text" placeholder="E.g. Python" class="form-control input-md" autocomplete="on" spellcheck="off" required="" data-role="tagsinput">
             </div>
@@ -68,7 +69,7 @@
           <!-- Textarea -->
           <div class="form-group">
             <label class="col-md-2 control-label" for="video-description">Video Description<br/><small class="text-muted">(supports Github Flavored Markdown)</small></label>
-            <div class="col-md-8">                     
+            <div class="col-md-8">
               <textarea class="form-control" id="video-description" name="video-description" rows="10">Give full description of your broadcast.
 For example, you can paste some code here with markdown tags and it will render pretty on the video page:
 
@@ -93,7 +94,7 @@ def foo():
 
         </fieldset>
       </form>
- 
+
     </div>
     <hr />
     <div class="row">
@@ -142,7 +143,7 @@ def foo():
     <div class="thumbnail">
       {{#if isLive}}
       <legend class="video-live video-status">
-        Live 
+        Live
       </legend>
       {{else}}
       <legend class="video-status">
@@ -180,7 +181,7 @@ def foo():
             <p class="watch-video">
               <a class="btn btn-danger remove-video">Remove</a>
             </p>
-          </div>  
+          </div>
         </div>
       </div>
     </div>
