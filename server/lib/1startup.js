@@ -7,7 +7,7 @@ if (! services) {
   ServiceConfiguration.configurations._collection.insert(googleServiceConfig);
 }
 
-process.env.MAIL_URL = Meteor.settings.mailgun; 
+process.env.MAIL_URL = Meteor.settings.mailgun.MAIL_URL;
 Channels._ensureIndex({ owner : 1 });
 
 UsersRoles = (function () {
