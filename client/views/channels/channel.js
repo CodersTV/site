@@ -16,11 +16,11 @@ Template.channel.onPlayerReady = function(event) {
 Template.channel.onError = function (event) {
   if (event.data === 0) {
     var channel = Template.channel.getChannel();
-    Meteor.call('requestVideoDeletion', channel.URL, function (err, res) { 
+    Meteor.call('requestVideoDeletion', channel.URL, function (err, res) {
       if (!err && res === true) {
         alertify.error('The user has deleted the video. We just removed it from listing.');
       }
-    }); 
+    });
   }
 };
 
@@ -61,8 +61,8 @@ Template.channel.DisqusReset = function () {
   try {
     DISQUS.reset({
       reload: true,
-      config: function () {  
-        this.page.identifier = Path();  
+      config: function () {
+        this.page.identifier = Path();
         this.page.url = Meteor.absoluteUrl() + Path().substr(1);
         if (! _.isEmpty(disqusSSO)) {
           this.page.remote_auth_s3 = disqusSSO.auth;
@@ -71,7 +71,7 @@ Template.channel.DisqusReset = function () {
       }
     });
   } catch (err) {
-    
+
   }
 };
 
@@ -84,7 +84,7 @@ Template.channel.DisqusSSO = function () {
 
     Session.set('disqusSSO', res);
     window.disqus_config = function () {
-      this.page.identifier = Path();  
+      this.page.identifier = Path();
       this.page.url = Meteor.absoluteUrl() + Path().substr(1);
       if (! _.isEmpty(res)) {
         this.page.remote_auth_s3 = res.auth;
@@ -92,7 +92,7 @@ Template.channel.DisqusSSO = function () {
       }
     }
   });
-}; 
+};
 
 Template.channel.LoadDisqusJS = function () {
   /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
@@ -128,7 +128,7 @@ Deps.autorun(function disqus () {
     return;
   }
 
-  Session.set('mustLoadDisqus', false); 
+  Session.set('mustLoadDisqus', false);
   Template.channel.LoadDisqusJS();
 });
 
@@ -167,12 +167,6 @@ Deps.autorun(function youtube (c) {
 
 Template.info_row.watchers = function () {
   return Presences.find().count();
-};
-
-Template.channel.getCoder = function() {
-  return Meteor.users.findOne({
-    _id: Session.get('currentCoder')
-  });
 };
 
 Template.channel_past_videos.pastList = function () {
@@ -240,7 +234,7 @@ Template.chatroom.events({
     }
   },
   'click #toggle-users-list': function () {
-    trackEvent('users-list', {}); 
+    trackEvent('users-list', {});
   },
   'click a[title="Github Flavored Markdown"]': function () {
     trackEvent('github-markdown', {});
