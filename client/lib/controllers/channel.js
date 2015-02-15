@@ -26,10 +26,17 @@ CoderController = RouteController.extend({
 VideoController = RouteController.extend({
   template: 'channel',
   waitOn: function () {
-    return Meteor.subscribe('VideoWithOwnerAndFollowers', this.params.videoId);
+    return [
+      Meteor.subscribe('ChannelWithOwnerAndFollowers', this.params.coderId),
+      Meteor.subscribe('SingleUser', this.params.coderId)
+    ];
   },
-  data: function () {
-    return Channels.findOne({_id: this.params.videoId});
+  onAfterAction: function () {
+    var coder = Meteor.users.findOneFromCoderId(this.params.coderId);
+    if (! _.isEmpty(coder)) {
+      Session.set('coder', coder);
+      Session.set('currentCoder', coder._id);
+    }
   }
 });
 

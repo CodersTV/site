@@ -105,5 +105,18 @@ UI.registerHelper('isFollowingCoder', function (_id) {
 UI.registerHelper('getCoder', function () {
   var coderId = Router.current().params.coderId;
 
-  return coderId && Meteor.users.findOne({_id: coderId});
+  return coderId && Meteor.users.findOneFromCoderId(coderId);
+});
+
+UI.registerHelper('getChannel', function () {
+  var videoId = Router.current() && Router.current().params.videoId;
+  var query = {};
+
+  if (videoId) {
+    query._id = videoId;
+  } else {
+    query.isLive = true
+  }
+
+  return Channels.findOne(query);
 });

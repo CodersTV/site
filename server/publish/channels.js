@@ -92,7 +92,7 @@ Meteor.publishComposite('ChannelWithOwnerAndFollowers', function (coderId) {
   };
 });
 
-Meteor.publishComposite('VideoWithOwnerAndFollowers', function (videoId) {
+Meteor.publishComposite('VideosWithOwnerAndFollowers', function (videoId) {
   return {
     find: function () {
       return Channels.find({_id: videoId});
