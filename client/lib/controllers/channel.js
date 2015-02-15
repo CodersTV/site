@@ -1,7 +1,10 @@
 CoderController = RouteController.extend({
   template: 'channel',
   waitOn: function () {
-    return Meteor.subscribe('ChannelWithOwnerAndFollowers', this.params.coderId);
+    return [
+      Meteor.subscribe('ChannelWithOwnerAndFollowers', this.params.coderId),
+      Meteor.subscribe('SingleUser', this.params.coderId)
+    ];
   },
   onAfterAction: function () {
     var coder = Meteor.users.findOneFromCoderId(this.params.coderId);

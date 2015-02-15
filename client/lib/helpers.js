@@ -101,3 +101,9 @@ Handlebars.registerHelper('getUserDescription', function () {
 UI.registerHelper('isFollowingCoder', function (_id) {
   return !! Follower.get(_id);
 });
+
+UI.registerHelper('getCoder', function () {
+  var coderId = Router.current().params.coderId;
+
+  return coderId && Meteor.users.findOne({_id: coderId});
+});
