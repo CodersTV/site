@@ -41,6 +41,11 @@ Template.index.helpers({
     return Schedule.find({
       date: { $gte: new Date() }
     }, { sort: { date: 1 } });
+  },
+  hasScheduledEvents: function () {
+    return Schedule.find({
+      date: { $gte: new Date() }
+    }).count() > 0;
   }
 });
 
