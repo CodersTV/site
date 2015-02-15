@@ -7,7 +7,10 @@ Meteor.publish('SelfUser', function () {
 });
 
 Meteor.publish('SingleUser', function (userId) {
-  return userId && Meteor.users.find({_id: userId}, {
+  return userId && Meteor.users.find({$or: [
+    {'profile.username': userId},
+    {_id: userId}
+  ]}, {
     fields: {profile: 1, paypal: 1, superchat: 1}
   });
 });

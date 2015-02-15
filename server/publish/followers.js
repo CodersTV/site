@@ -3,7 +3,9 @@ Meteor.publish('Followers', function () {
 });
 
 Meteor.publish('CoderFollowers', function (coderId) {
-  return Followers.find({coderId: coderId});
+  var user = Meteor.users.findOneFromCoderId(coderId);
+
+  return Followers.find({coderId: user._id});
 });
 
 Meteor.publishComposite('SelfFollowersWithProfiles', function () {
