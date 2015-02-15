@@ -15,7 +15,7 @@ Template.channel.onPlayerReady = function(event) {
 
 Template.channel.onError = function (event) {
   if (event.data === 0) {
-    var channel = Template.channel.getChannel();
+    var channel = UI._globalHelpers.getChannel();
     Meteor.call('requestVideoDeletion', channel.URL, function (err, res) {
       if (!err && res === true) {
         alertify.error('The user has deleted the video. We just removed it from listing.');
@@ -106,13 +106,9 @@ Template.channel.LoadDisqusJS = function () {
   })();
 };
 
-Template.channel.getChannel = function() {
-  return Channels.findOne({isLive: true});
-};
-
 Deps.autorun(function disqus () {
   var user = Meteor.user();
-  var channel = Template.channel.getChannel();
+  var channel = UI._globalHelpers.getChannel();
 
   if (Session.equals('channelRendered', false) ||
       Session.equals('disqusSSO', false) ||
@@ -133,7 +129,7 @@ Deps.autorun(function disqus () {
 });
 
 Deps.autorun(function youtube (c) {
-  var channel = Template.channel.getChannel();
+  var channel = UI._globalHelpers.getChannel();
   if (Session.equals('YTApiReady', false) ||
       Session.equals('channelRendered', false) ||
       ! channel) {
