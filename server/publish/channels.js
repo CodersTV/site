@@ -57,39 +57,23 @@ Meteor.publishComposite('ChannelsWithOwner', function (limit) {
   };
 });
 
-Meteor.publishComposite('ChannelWithOwnerAndFollowers', function (coderId) {
-  return {
-    find: function () {
-      var channels = Channels.find({
-        owner: coderId
+Meteor.publish('CoderChannel', function (coderId) {
+  var channels = Channels.find({
+    owner: coderId
+  });
+
+  if (channels.count() === 0) {
+    // coderId could be username
+    var user = Meteor.users.findOne({'profile.username': coderId});
+
+    if (user) {
+      channels = Channels.find({
+        owner: user._id
       });
+    }
+  }
 
-      if (channels.count() === 0) {
-        // coderId could be username
-        var user = Meteor.users.findOne({'profile.username': coderId});
-
-        if (user) {
-          channels = Channels.find({
-            owner: user._id
-          });
-        }
-      }
-
-      return channels;
-    },
-    children: [{
-      find: function (channel) {
-        return Meteor.users.find({_id: channel.owner}, {
-          superchat: 1,
-          profile: 1
-        });
-      }
-    }, {
-      find: function (channel) {
-        return Followers.find({followerId: this.userId});
-      }
-    }]
-  };
+  return channels;
 });
 
 Meteor.publish('SelfVideos', function () {
