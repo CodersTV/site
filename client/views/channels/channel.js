@@ -107,7 +107,7 @@ Template.channel.LoadDisqusJS = function () {
 };
 
 Template.channel.getChannel = function() {
-  return Channels.findOne({});
+  return Channels.findOne({isLive: true});
 };
 
 Deps.autorun(function disqus () {

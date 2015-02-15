@@ -61,8 +61,7 @@ Meteor.publishComposite('ChannelWithOwnerAndFollowers', function (coderId) {
   return {
     find: function () {
       var channels = Channels.find({
-        owner: coderId,
-        isLive: true
+        owner: coderId
       });
 
       if (channels.count() === 0) {
@@ -71,8 +70,7 @@ Meteor.publishComposite('ChannelWithOwnerAndFollowers', function (coderId) {
 
         if (user) {
           channels = Channels.find({
-            owner: user._id,
-            isLive: true
+            owner: user._id
           });
         }
       }
