@@ -36,6 +36,19 @@ Template.index.featuredBroadcast = function () {
     return Channels.findOne({featured: true});
 };
 
+Template.index.helpers({
+  scheduledEvents: function () {
+    return Schedule.find({
+      date: {$gte: new Date()}
+    }, {sort: {date: 1} , limit: 4});
+  },
+  hasScheduledEvents: function () {
+    return Schedule.find({
+      date: { $gte: new Date() }
+    }).count() > 0;
+  }
+});
+
 Template.index.events({
     'submit #nl-form': function (event, t) {
         event.preventDefault();

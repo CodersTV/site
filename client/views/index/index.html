@@ -1,4 +1,3 @@
-
 <template name="index">
 
   <div class="crp-showcase">
@@ -86,17 +85,35 @@
         </div>
       </div>
       <div class="container">
-          {{#each pastList}}
+        {{#each pastList}}
           {{> video_thumb}}
-          {{/each}}
+        {{/each}}
       </div>
     </div>
     <!-- // Recent Videos -->
 
+    <!-- Agenda -->
+    {{#if hasScheduledEvents}}
+    <div class="row contrast-row">
+      <div class="container">
+        <div class="col-sm-8 col-sm-offset-2">
+          <h2 class="oswald text-center">Next Events</h2>
+          <hr class="double-margin">
+        </div>
+        <div>
+          {{#each scheduledEvents}}
+            {{> scheduled_event}}
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    {{/if}}
+    <!-- //Agenda -->
+
 </template>
 
 <template name="featured_broadcast">
-  <div id="featured-video" class="row crp-desc">
+  <div id="featured-video" class="row crp-desc contrast-row">
     <div class="container">
       <div class="col-sm-8 col-sm-offset-2">
         <h2 class="oswald text-center">Featured Broadcast</h2>

@@ -89,7 +89,8 @@ Router.map(function () {
     waitOn: function () {
       return [
         Meteor.subscribe('ChannelsWithOwner', 3),
-        Meteor.subscribe('FeaturedChannelWithUser')
+        Meteor.subscribe('FeaturedChannelWithUser'),
+        Meteor.subscribe('AgendaWithProfiles')
       ];
     }
   });
