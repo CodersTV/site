@@ -39,8 +39,8 @@ Template.index.featuredBroadcast = function () {
 Template.index.helpers({
   scheduledEvents: function () {
     return Schedule.find({
-      date: { $gte: new Date() }
-    }, { sort: { date: 1 } });
+      date: {$gte: new Date()}
+    }, {sort: {date: 1} , limit: 4});
   },
   hasScheduledEvents: function () {
     return Schedule.find({

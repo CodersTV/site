@@ -33,9 +33,10 @@ Meteor.publishComposite('OneScheduleWithProfile', function (_id) {
   };
 });
 
-Meteor.publishComposite('EntireAgendaWithProfiles', function () {
+Meteor.publishComposite('AgendaWithProfiles', function () {
   return {
     find: function () {
+
       return Schedule.find({
         $or: [{
           owner: this.userId,
@@ -43,7 +44,8 @@ Meteor.publishComposite('EntireAgendaWithProfiles', function () {
         }, {
           isActive: true
         }]
-      });
+      }, {sort: {date: -1}});
+
     },
     children: [{
       find: function (schedule) {

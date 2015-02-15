@@ -90,7 +90,7 @@ Router.map(function () {
       return [
         Meteor.subscribe('ChannelsWithOwner', 3),
         Meteor.subscribe('FeaturedChannelWithUser'),
-        Meteor.subscribe('EntireAgendaWithProfiles')
+        Meteor.subscribe('AgendaWithProfiles')
       ];
     }
   });
