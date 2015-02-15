@@ -6,7 +6,7 @@ Template.agenda.events({
     var coderId = Router.current().data().owner;
     Router.go('coder', { coderId: coderId });
   },
-  'click .follow-coder': function () {
+  'click .follow-coder': function (event) {
     var coderId = Router.current().data().owner;
     
     if (Meteor.user()) {
