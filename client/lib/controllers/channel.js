@@ -2,8 +2,9 @@ CoderController = RouteController.extend({
   template: 'channel',
   waitOn: function () {
     return [
-      Meteor.subscribe('ChannelWithOwnerAndFollowers', this.params.coderId),
-      Meteor.subscribe('SingleUser', this.params.coderId)
+      Meteor.subscribe('CoderChannel', this.params.coderId),
+      Meteor.subscribe('SingleUser', this.params.coderId),
+      Meteor.subscribe('CoderFollowers', this.params.coderId)
     ];
   },
   onAfterAction: function () {
@@ -27,8 +28,9 @@ VideoController = RouteController.extend({
   template: 'channel',
   waitOn: function () {
     return [
-      Meteor.subscribe('ChannelWithOwnerAndFollowers', this.params.coderId),
-      Meteor.subscribe('SingleUser', this.params.coderId)
+      Meteor.subscribe('CoderChannel', this.params.coderId),
+      Meteor.subscribe('SingleUser', this.params.coderId),
+      Meteor.subscribe('CoderFollowers', this.params.coderId)
     ];
   },
   onAfterAction: function () {
