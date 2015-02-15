@@ -92,26 +92,6 @@ Meteor.publishComposite('ChannelWithOwnerAndFollowers', function (coderId) {
   };
 });
 
-Meteor.publishComposite('VideosWithOwnerAndFollowers', function (videoId) {
-  return {
-    find: function () {
-      return Channels.find({_id: videoId});
-    },
-    children: [{
-      find: function (channel) {
-        return Meteor.users.find({_id: channel.owner}, {
-          superchat: 1,
-          profile: 1
-        });
-      }
-    }, {
-      find: function (channel) {
-        return Followers.find({followerId: this.userId});
-      }
-    }]
-  };
-});
-
 Meteor.publish('SelfVideos', function () {
   return Channels.find({owner: this.userId});
 });
