@@ -2,8 +2,8 @@ Google = {};
 GPlus = {};
 
 (function () {
-  var debug = Meteor.require('debug')('ct:google.js');
-  var googleapis = Meteor.require('googleapis');
+  var debug = Meteor.npmRequire('debug')('ct:google.js');
+  var googleapis = Meteor.npmRequire('googleapis');
   var OAuth2Client = googleapis.OAuth2Client;
   var googleAccount = ServiceConfiguration.configurations._collection.findOne({
     service: 'google'

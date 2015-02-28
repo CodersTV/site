@@ -4,7 +4,7 @@
  *    return Users.find({is_public: true});
  *  }
  */
-var debug = Meteor.require('debug')('ct:server:users.js');
+var debug = Meteor.npmRequire('debug')('ct:server:users.js');
 var Fiber = Npm.require('fibers');
 BetaUsers = new Meteor.Collection('betaUsers');
 
