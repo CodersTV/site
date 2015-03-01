@@ -18,7 +18,7 @@ APP_DIR=/home/meteor
 ROOT_URL=http://$APP_HOST
 MONGO_URL=mongodb://localhost:27017/$APP_NAME
 
-METEOR_CMD=mrt
+METEOR_CMD=meteor
 METEOR_OPTIONS=''
 
 if [ -z "$EC2_PEM_FILE" ]; then
@@ -61,7 +61,6 @@ sudo git clone $GIT_URL $APP_NAME;
 DEPLOY="
 cd $APP_DIR;
 cd $APP_NAME;
-sudo npm -g update meteorite;
 sudo git fetch --all;
 sudo git reset --hard origin/$GIT_BRANCH;
 sudo git checkout $GIT_BRANCH;

@@ -16,7 +16,6 @@ gadicohen:robots-txt
 arunoda:streams
 iron:router
 joshowens:shareit
-coderstv:chat
 meteor
 patrickleet:tags
 service-configuration
@@ -40,3 +39,4 @@ meteor-platform
 twbs:bootstrap
 coderstv:reactive-path
 tmeasday:presence
+coderstv:chat
