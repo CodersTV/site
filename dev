@@ -18,7 +18,7 @@ APP_DIR=/home/meteor
 ROOT_URL=http://$APP_HOST
 MONGO_URL=mongodb://localhost:27017/$APP_NAME
 
-METEOR_CMD=mrt
+METEOR_CMD=meteor
 METEOR_OPTIONS=''
 
 if [ -z "$EC2_PEM_FILE" ]; then
@@ -61,17 +61,15 @@ sudo git clone $GIT_URL $APP_NAME;
 DEPLOY="
 cd $APP_DIR;
 cd $APP_NAME;
-sudo npm -g update meteorite;
 sudo git fetch --all;
 sudo git reset --hard origin/$GIT_BRANCH;
 sudo git checkout $GIT_BRANCH;
-sudo rm -rf ../dev-bundle;
-sudo rm -rf ../dev-bundle.tgz;
-sudo $METEOR_CMD update --force;
-sudo $METEOR_CMD bundle --debug ../dev-bundle.tgz;
-cd ..;
-mkdir -p dev-bundle;
-sudo tar -zxvf dev-bundle.tgz;
+sudo git clean -f -d;
+sudo rm -rf ../bundle;
+sudo $METEOR_CMD build ../ --debug --directory;
+cd ../bundle/programs/server;
+npm install;
+cd ../../..;
 pm2 delete dev;
 mongo $APP_NAME $APP_DIR/$APP_NAME/mongo.config;
 METEOR_SETTINGS=\$(cat ${APP_DIR}/${APP_NAME}/dev.json) DEBUG=ct:* PORT=80 ROOT_URL=$ROOT_URL MONGO_URL=$MONGO_URL pm2 start bundle/main.js -x --name 'dev';

@@ -4,9 +4,9 @@
 
 // var CLEANUP_INTERVAL = 5 * 60 * 1000,
 var CLEANUP_INTERVAL = 60 * 1000;
-var moment = Meteor.require('moment');
+var moment = Meteor.npmRequire('moment');
 var Fiber = Npm.require('fibers');
-var debug = Meteor.require('debug')('ct:cleanup.js');
+var debug = Meteor.npmRequire('debug')('ct:cleanup.js');
 
 Meteor.setInterval(function () {
   Channels.find({isLive: true}).forEach(function (channel) {

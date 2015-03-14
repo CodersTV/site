@@ -1,4 +1,4 @@
-var CryptoJS = Meteor.require('crypto-js');
+var CryptoJS = Meteor.npmRequire('crypto-js');
 
 Meteor.methods({
     disqusSSO: function () {

@@ -62,8 +62,6 @@ Channels.before.insert(function (userId, doc) {
 
 Channels.after.insert(function (userId, doc) {
   Channels.sendFollowEmail(userId, doc);
-
-  Language.incVideos(doc.language);
 });
 
 Channels.before.update(function (userId, doc, fieldNames, modifier, options) {
@@ -72,8 +70,3 @@ Channels.before.update(function (userId, doc, fieldNames, modifier, options) {
     modifier.$set.finishedAt = +(new Date());
   }
 });
-
-Channels.after.remove(function (userId, doc) {
-  Language.decVideos(doc.language);
-});
-

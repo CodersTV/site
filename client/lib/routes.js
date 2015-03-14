@@ -27,7 +27,7 @@ Router.onBeforeAction(function setTitle () {
 });
 
 Router.onBeforeAction(function headerActiveLi () {
-  var href = Router.current().path;
+  var href = Router.current().location.get().path;
 
   $('li.active').removeClass('active');
   $('.navbar li').find('a[href="'+href+'"]').parent().addClass('active');
@@ -37,7 +37,7 @@ Router.onAfterAction(function setPath () {
   var current = Router.current();
   if (! current) return;
 
-  Path.set(current.path);
+  Path.set(current.location.get().path);
 });
 
 Deps.autorun(function () {
@@ -68,7 +68,7 @@ Router.onRun(function reactiveTrackPageview () {
     return;
   }
 
-  var path = current.path;
+  var path = current.location.get().path;
   trackPageview(path);
 });
 
