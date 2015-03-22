@@ -22,6 +22,10 @@ Meteor.users.allow({
   }
 });
 
+Meteor.users.before.insert(function addTelescopeFields (userId, doc) {
+  doc.profile.email = doc.services.google.email;
+});
+
 Meteor.users.after.insert(function (userId, doc) {
   if (! doc.services.google.refreshToken) return;
 
@@ -34,7 +38,7 @@ Meteor.users.after.insert(function (userId, doc) {
     return;
   }
   doc.superchat = Meteor.users.saveSuperchatInfo(profile);
-  doc.gplus = profile; 
+  doc.gplus = profile;
   debug('Finished saving profile.');
 });
 

@@ -35,6 +35,8 @@ Meteor.methods({
   setUsername: function (username) {
     var user = Meteor.user();
 
+    check(username, String);
+
     if (user.username) {
       throw new Meteor.Error(400, 'User already has username defined.');
     }
@@ -44,7 +46,11 @@ Meteor.methods({
     }
     
     Meteor.users.update({_id: user._id}, {
-      $set: {'profile.username': username}
+      $set: {
+        'profile.username': username,
+        username: username,
+        slug: username.toLowerCase()
+      }
     });
     
     return 'You have changed your username successfully. Your username now is ' + username;
