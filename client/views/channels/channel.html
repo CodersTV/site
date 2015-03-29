@@ -34,9 +34,7 @@
         </div>
         {{/with}}
         <div class="row">
-          {{#with getChannel}}
           {{> info_row}}
-          {{/with}}
         </div>
       </div>
       <div class="col-md-4">
@@ -76,19 +74,16 @@
             {{/if}}
           {{/with}}
 
-          {{#if isLive}}
-            <!--
-            <span class="pull-right"><i class="fa fa-user"></i> {{watchers}} watching</span>
-            -->
-          {{/if}}
         </div>
         <div class="col-md-4">
+          {{#with getChannel}}
           {{#if isLive}}
             <div class="watching-count pull-right">
               <i class="fa fa-user" style="color: #FD8F00;"></i>
               {{watchers}} coders watching
             </div>
           {{/if}}
+          {{/with}}
         </div>
     </div>
     <div class="row">
