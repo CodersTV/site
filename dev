@@ -76,7 +76,7 @@ METEOR_SETTINGS=\$(cat ${APP_DIR}/${APP_NAME}/dev.json) DEBUG=ct:* PORT=80 ROOT_
 "
 
 function run {
-    DEBUG=ct:* mrt run --settings dev.json
+    DEBUG=ct:* meteor run --settings dev.json
 }
 
 function mon {
