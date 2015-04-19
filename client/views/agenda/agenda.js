@@ -31,7 +31,7 @@ Template.agenda.events({
     Follower.set(coderId);
     trackEvent('follow-coder', {coderId: coderId});
   },
-  'click .unfollow-coder': function (event) {
+  'click .unfollow-coder': function () {
     var currentCoderId = Router.current().data().owner;
 
     Follower.unset(currentCoderId);
@@ -110,7 +110,7 @@ Disqus.SSO = function () {
         this.page.remote_auth_s3 = res.auth;
         this.page.api_key = res.pubKey;
       }
-    }
+    };
   });
 };
 

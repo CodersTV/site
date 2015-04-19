@@ -17,21 +17,6 @@ Template.layout.channelsCount = function () {
   return Channel.getLiveCount();
 }
 
-Template.layout.languagesCount = function () {
-  // return _.uniq(_.pluck(Channels.find({ isLive : true }).fetch(), 'language')).length;
-  return Languages.find().count();
-}
-
-Template.layout.featuredLanguages = function () {
-  var channels = Channels.find().fetch(),
-  uniqLanguages = _.uniq(_.pluck(channels, 'language'));
-
-  if ( !uniqLanguages.length )
-    return [];
-
-  return Languages.find({ name : { $in : uniqLanguages } }, { sort : { watchers : -1 } , limit : 5 });
-};
-
 Template.layout.featuredChannels = function () {
   return Channels.find({ isLive : true }, { sort : { watchers : -1, limit : 5 } });
 };

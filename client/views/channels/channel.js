@@ -27,7 +27,7 @@ Template.channel.onError = function (event) {
 Template.channel.created = function () {
   if (typeof player === 'undefined') {
     $.getScript('//www.youtube.com/iframe_api', function () {
-      $.getScript('//s.ytimg.com/yts/jsbin/www-widgetapi-vfl9XMVxC.js', function () {})
+      $.getScript('//s.ytimg.com/yts/jsbin/www-widgetapi-vfl9XMVxC.js', function () {});
     });
   }
 };
