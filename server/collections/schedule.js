@@ -16,10 +16,7 @@ Schedule.allow({
       throw new Meteor.Error(406, 'You can\'t create an event in the past');
     }
 
-    return true;
-  },
-  update: function (userId, doc, fieldNames, modifier) {
-    return doc.owner === userId;
+    return !! userId;
   }
 });
 
