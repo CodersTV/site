@@ -65,14 +65,6 @@ Handlebars.registerHelper('getCoderChannelURL', function (coderId) {
   return getCoderUrl(coderId);
 });
 
-Handlebars.registerHelper('getLanguageUrl', function (name) {
-  return Router.routes.language.path({language: name});
-});
-
-Handlebars.registerHelper('getVideo', function (videoId) {
-
-});
-
 Handlebars.registerHelper('getVideoUrl', function (owner, videoId) {
   var user = Meteor.users.findOne({_id: owner}),
   username = owner;
@@ -81,10 +73,6 @@ Handlebars.registerHelper('getVideoUrl', function (owner, videoId) {
     username = user.profile.username;
   }
   return Router.routes.video.path({coderId: username, videoId: videoId});
-});
-
-Handlebars.registerHelper('encodedLanguagePath', function (language) {
-  return Router.routes.language.path({language: language});
 });
 
 Handlebars.registerHelper('fromNow', function (timestamp) {

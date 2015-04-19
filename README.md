@@ -7,7 +7,6 @@ This is our website, made with love and Meteor.
 ## Dependencies
 
 * Meteor
-* Meteorite
 
 ## Configuring
 
