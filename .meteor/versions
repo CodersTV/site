@@ -19,6 +19,7 @@ cmather:handlebars-server@2.0.0
 coderstv:chat@0.2.0
 coderstv:reactive-path@0.2.1
 coffeescript@1.0.5
+cottz:publish-relations@1.2.0
 dburles:collection-helpers@1.0.2
 ddp@1.0.14
 deps@1.0.6

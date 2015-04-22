@@ -33,27 +33,20 @@ Meteor.publishComposite('OneScheduleWithProfile', function (_id) {
   };
 });
 
-Meteor.publishComposite('AgendaWithProfiles', function () {
-  return {
-    find: function () {
-
-      return Schedule.find({
-        $or: [{
-          owner: this.userId,
-          isActive: false
-        }, {
-          isActive: true
-        }]
-      }, {sort: {date: -1}});
-
-    },
-    children: [{
-      find: function (schedule) {
-        return Meteor.users.find({_id: schedule.owner}, {
-          profile: 1,
-          superchat: 1
-        });
-      }
+Meteor.publishRelations('AgendaWithProfiles', function () {
+  this.cursor(Schedule.find({
+    $or: [{
+      owner: this.userId,
+      isActive: false
+    }, {
+      isActive: true
     }]
-  };
+  }, {sort: {date: -1}}), function (_id, schedule) {
+    this.cursor(Meteor.users.find({_id: schedule.owner}, {
+      profile: 1,
+      superchat: 1
+    }));
+  });
+
+  return this.ready();
 });

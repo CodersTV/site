@@ -1,17 +1,12 @@
-Meteor.publishComposite('FeaturedChannelWithUser', function () {
-  return {
-    find: function () {
-      return Channels.find({}, {sort: {finishedAt: 1, createdAt: 1}});
-    },
-    children: [{
-      find: function (channel) {
-        return Meteor.users.find({_id: channel.owner}, {
-          superchat: 1,
-          profile: 1
-        });
-      }
-    }]
-  };
+Meteor.publishRelations('FeaturedChannelWithUser', function () {
+  this.cursor(Channels.find({}, {sort: {finishedAt: 1, createdAt: 1}}), function (_id, channel) {
+    this.cursor(Meteor.users.find({_id: channel.owner}, {
+      superchat: 1,
+      profile: 1
+    }));
+  });
+
+  return this.ready();
 });
 
 Meteor.publishComposite('ChannelsSearchWithUsers', function (searchText) {
@@ -41,20 +36,15 @@ Meteor.publishComposite('ChannelsSearchWithUsers', function (searchText) {
   };
 });
 
-Meteor.publishComposite('ChannelsWithOwner', function (limit) {
-  return {
-    find: function () {
-      return Channels.find({}, {sort: {finishedAt: 1, createdAt: 1}, limit: limit || 0});
-    },
-    children: [{
-      find: function (channel) {
-        return Meteor.users.find({_id: channel.owner}, {
-          superchat: 1,
-          profile: 1
-        });
-      }
-    }]
-  };
+Meteor.publishRelations('ChannelsWithOwner', function (limit) {
+  this.cursor(Channels.find({}, {sort: {finishedAt: 1, createdAt: 1}, limit: limit || 0}), function (_id, channel) {
+    this.cursor(Meteor.users.find({_id: channel.owner}, {
+      superchat: 1,
+      profile: 1
+    }));
+  });
+
+  return this.ready();
 });
 
 Meteor.publish('CoderChannel', function (coderId) {
