@@ -1,5 +1,5 @@
 Meteor.publishRelations('FeaturedChannelWithUser', function () {
-  this.cursor(Channels.find({}, {sort: {finishedAt: 1, createdAt: 1}}), function (_id, channel) {
+  this.cursor(Channels.find({featured: true}, {sort: {finishedAt: 1, createdAt: 1}}), function (_id, channel) {
     this.cursor(Meteor.users.find({_id: channel.owner}, {
       superchat: 1,
       profile: 1
@@ -9,31 +9,29 @@ Meteor.publishRelations('FeaturedChannelWithUser', function () {
   return this.ready();
 });
 
-Meteor.publishComposite('ChannelsSearchWithUsers', function (searchText) {
-  return {
-    find: function () {
-      if (_.isEmpty(searchText)) {
-        return Channels.find({}, {sort: {finishedAt: 1, createdAt: 1}});
-      }
-      check(searchText, String);
+Meteor.publishRelations('ChannelsSearchWithUsers', function (searchText) {
+  if (_.isEmpty(searchText)) {
+    this.cursor(Channels.find({}, {sort: {finishedAt: 1, createdAt: 1}}), function (_id, channel) {
+      this.cursor(Meteor.users.find({_id: channel.owner}, {
+        profile: 1
+      }));
+    });
+  } else {
+    check(searchText, String);
 
-      var regex = '.*' + searchText + '.*';
-
-      return Channels.find({$or : [
-        {title: {$regex: regex, $options: 'i'}},
-        {language: {$regex: regex, $options: 'i'}}
-      ]}, {
-        sort: {finishedAt: 1, createdAt: 1}
-      });
-    },
-    children: [{
-      find: function (channel) {
-        return Meteor.users.find({_id: channel.owner}, {
-          profile: 1
-        });
-      }
-    }]
-  };
+    var regex = '.*' + searchText + '.*';
+    this.cursor(Channels.find({$or : [
+      {title: {$regex: regex, $options: 'i'}},
+      {language: {$regex: regex, $options: 'i'}}
+    ]}, {
+      sort: {finishedAt: 1, createdAt: 1}
+    }), function (_id, channel) {
+      this.cursor(Meteor.users.find({_id: channel.owner}, {
+        profile: 1
+      }));
+    });
+  }
+  return this.ready();
 });
 
 Meteor.publishRelations('ChannelsWithOwner', function (limit) {

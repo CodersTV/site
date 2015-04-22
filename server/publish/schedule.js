@@ -17,20 +17,14 @@ Meteor.publish('Schedule', function (_id, activeOnly) {
   return Schedule.find(query);
 });
 
-Meteor.publishComposite('OneScheduleWithProfile', function (_id) {
-  return {
-    find: function () {
-      return Schedule.find({_id: _id});
-    },
-    children: [{
-      find: function (schedule) {
-        return Meteor.users.find({_id: schedule.owner}, {
-          profile: 1,
-          superchat: 1
-        });
-      }
-    }]
-  };
+Meteor.publishRelations('OneScheduleWithProfile', function (_id) {
+  this.cursor(Schedule.find({_id: _id}), function (_id, schedule) {
+    this.cursor(Meteor.users.find({_id: schedule.owner}, {
+      profile: 1,
+      superchat: 1
+    }));
+  });
+  return this.ready();
 });
 
 Meteor.publishRelations('AgendaWithProfiles', function () {
