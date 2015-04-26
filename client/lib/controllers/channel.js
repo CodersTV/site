@@ -9,7 +9,7 @@ CoderController = RouteController.extend({
   },
   onAfterAction: function () {
     var coder = Meteor.users.findOneFromCoderId(this.params.coderId);
-    var channel = Channels.findOne();
+    var channel = Channels.findOne({}, {sort: {createdAt: -1}});
 
     if (! _.isEmpty(coder)) {
       Session.set('coder', coder);
@@ -56,7 +56,7 @@ VideoController = RouteController.extend({
   },
   onAfterAction: function () {
     var coder = Meteor.users.findOneFromCoderId(this.params.coderId);
-    var channel = Channels.findOne();
+    var channel = Channels.findOne(this.params.videoId);
 
     if (! _.isEmpty(coder)) {
       Session.set('coder', coder);
