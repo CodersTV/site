@@ -38,7 +38,7 @@ CoderController = RouteController.extend({
           'profile:username': coder.profile.username || coder.profile.name,
           title: seoTitle,
           description: channel.description,
-          image: coder.superchat.pic_square
+          image: 'http://img.youtube.com/vi/' + channel.URL + '/maxresdefault.jpg'
         }
       });
     }
@@ -76,7 +76,7 @@ VideoController = RouteController.extend({
           'video:tags': channel.language,
           title: seoTitle,
           description: channel.description,
-          image: coder.superchat.pic_square
+          image: 'http://img.youtube.com/vi/' + channel.URL + '/maxresdefault.jpg'
         }
       });
     }
