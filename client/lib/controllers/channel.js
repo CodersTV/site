@@ -24,8 +24,9 @@ CoderController = RouteController.extend({
         }
       );
 
+      var seoTitle = channel.title + ' by ' + coder.profile.name + ' | CodersTV';
       SEO.set({
-        title: channel.title + ' by ' + coder.profile.name + ' | CodersTV',
+        title: seoTitle,
         rel_author: coder.superchat.url || '',
         meta: {
           description: channel.description
@@ -35,9 +36,9 @@ CoderController = RouteController.extend({
           'profile:first_name': coder.superchat.givenName,
           'profile:last_name': coder.superchat.familyName,
           'profile:username': coder.profile.username || coder.profile.name,
-          title: channel.title,
+          title: seoTitle,
           description: channel.description,
-          image: coder.image
+          image: coder.superchat.pic_square
         }
       });
     }
@@ -61,8 +62,9 @@ VideoController = RouteController.extend({
       Session.set('coder', coder);
       Session.set('currentCoder', coder._id);
 
+      var seoTitle = channel.title + ' by ' + coder.profile.name + ' | CodersTV';
       SEO.set({
-        title: channel.title + ' by ' + coder.profile.name + ' | CodersTV',
+        title: seoTitle,
         rel_author: coder.superchat.url || '',
         meta: {
           description: channel.description
@@ -72,9 +74,9 @@ VideoController = RouteController.extend({
           'video:writer': coder.profile.name,
           'video:release_date': (new Date(channel.finishedAt)).toISOString(),
           'video:tags': channel.language,
-          title: channel.title,
+          title: seoTitle,
           description: channel.description,
-          image: coder.image
+          image: coder.superchat.pic_square
         }
       });
     }
