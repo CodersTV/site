@@ -6,7 +6,7 @@ Meteor.publish('Schedule', function (_id, activeOnly) {
   }
 
   if (activeOnly) {
-    query.$or = [{ 
+    query.$or = [{
       owner: this.userId,
       isActive: false
     }, {
@@ -18,12 +18,17 @@ Meteor.publish('Schedule', function (_id, activeOnly) {
 });
 
 Meteor.publishRelations('OneScheduleWithProfile', function (_id) {
-  this.cursor(Schedule.find({_id: _id}), function (_id, schedule) {
-    this.cursor(Meteor.users.find({_id: schedule.owner}, {
-      profile: 1,
-      superchat: 1
-    }));
-  });
+  if (_id) {
+    this.cursor(Schedule.find({_id: _id}), function (_id, schedule) {
+      this.cursor(Meteor.users.find({_id: schedule.owner}, {
+        fields: {
+          profile: 1,
+          superchat: 1
+        }
+      }));
+    });
+  }
+
   return this.ready();
 });
 
@@ -37,8 +42,10 @@ Meteor.publishRelations('AgendaWithProfiles', function () {
     }]
   }, {sort: {date: -1}}), function (_id, schedule) {
     this.cursor(Meteor.users.find({_id: schedule.owner}, {
-      profile: 1,
-      superchat: 1
+      fields: {
+        profile: 1,
+        superchat: 1
+      }
     }));
   });
 

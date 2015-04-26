@@ -3,7 +3,9 @@ Meteor.publish('Users', function () {
 });
 
 Meteor.publish('SelfUser', function () {
-  return Meteor.users.find({_id: this.userId}, {fields: {profile: 1, paypal: 1, superchat: 1}});
+  return this.userId && Meteor.users.find({_id: this.userId}, {
+    fields: {profile: 1, paypal: 1, superchat: 1}
+  }) || this.ready();
 });
 
 Meteor.publish('SingleUser', function (userId) {
@@ -12,5 +14,5 @@ Meteor.publish('SingleUser', function (userId) {
     {_id: userId}
   ]}, {
     fields: {profile: 1, paypal: 1, superchat: 1}
-  });
+  }) || this.ready();
 });

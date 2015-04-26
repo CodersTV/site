@@ -1,8 +1,10 @@
 Meteor.publishRelations('FeaturedChannelWithUser', function () {
   this.cursor(Channels.find({featured: true}, {sort: {finishedAt: 1, createdAt: 1}}), function (_id, channel) {
     this.cursor(Meteor.users.find({_id: channel.owner}, {
-      superchat: 1,
-      profile: 1
+      fields: {
+        superchat: 1,
+        profile: 1
+      }
     }));
   });
 
@@ -13,7 +15,9 @@ Meteor.publishRelations('ChannelsSearchWithUsers', function (searchText) {
   if (_.isEmpty(searchText)) {
     this.cursor(Channels.find({}, {sort: {finishedAt: 1, createdAt: 1}}), function (_id, channel) {
       this.cursor(Meteor.users.find({_id: channel.owner}, {
-        profile: 1
+        fields: {
+          profile: 1
+        }
       }));
     });
   } else {
@@ -27,7 +31,9 @@ Meteor.publishRelations('ChannelsSearchWithUsers', function (searchText) {
       sort: {finishedAt: 1, createdAt: 1}
     }), function (_id, channel) {
       this.cursor(Meteor.users.find({_id: channel.owner}, {
-        profile: 1
+        fields: {
+          profile: 1
+        }
       }));
     });
   }
@@ -37,8 +43,10 @@ Meteor.publishRelations('ChannelsSearchWithUsers', function (searchText) {
 Meteor.publishRelations('ChannelsWithOwner', function (limit) {
   this.cursor(Channels.find({}, {sort: {finishedAt: 1, createdAt: 1}, limit: limit || 0}), function (_id, channel) {
     this.cursor(Meteor.users.find({_id: channel.owner}, {
-      superchat: 1,
-      profile: 1
+      fields: {
+        superchat: 1,
+        profile: 1
+      }
     }));
   });
 
@@ -46,6 +54,10 @@ Meteor.publishRelations('ChannelsWithOwner', function (limit) {
 });
 
 Meteor.publish('CoderChannel', function (coderId) {
+  if (! coderId) {
+    return this.ready();
+  }
+
   var channels = Channels.find({
     owner: coderId
   });
@@ -65,5 +77,5 @@ Meteor.publish('CoderChannel', function (coderId) {
 });
 
 Meteor.publish('SelfVideos', function () {
-  return Channels.find({owner: this.userId});
+  return this.userId && Channels.find({owner: this.userId}) || this.ready();
 });
