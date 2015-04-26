@@ -6,7 +6,7 @@ Meteor.publish('Schedule', function (_id, activeOnly) {
   }
 
   if (activeOnly) {
-    query.$or = [{ 
+    query.$or = [{
       owner: this.userId,
       isActive: false
     }, {
@@ -17,43 +17,37 @@ Meteor.publish('Schedule', function (_id, activeOnly) {
   return Schedule.find(query);
 });
 
-Meteor.publishComposite('OneScheduleWithProfile', function (_id) {
-  return {
-    find: function () {
-      return Schedule.find({_id: _id});
-    },
-    children: [{
-      find: function (schedule) {
-        return Meteor.users.find({_id: schedule.owner}, {
+Meteor.publishRelations('OneScheduleWithProfile', function (_id) {
+  if (_id) {
+    this.cursor(Schedule.find({_id: _id}), function (_id, schedule) {
+      this.cursor(Meteor.users.find({_id: schedule.owner}, {
+        fields: {
           profile: 1,
           superchat: 1
-        });
-      }
-    }]
-  };
+        }
+      }));
+    });
+  }
+
+  return this.ready();
 });
 
-Meteor.publishComposite('AgendaWithProfiles', function () {
-  return {
-    find: function () {
-
-      return Schedule.find({
-        $or: [{
-          owner: this.userId,
-          isActive: false
-        }, {
-          isActive: true
-        }]
-      }, {sort: {date: -1}});
-
-    },
-    children: [{
-      find: function (schedule) {
-        return Meteor.users.find({_id: schedule.owner}, {
-          profile: 1,
-          superchat: 1
-        });
-      }
+Meteor.publishRelations('AgendaWithProfiles', function () {
+  this.cursor(Schedule.find({
+    $or: [{
+      owner: this.userId,
+      isActive: false
+    }, {
+      isActive: true
     }]
-  };
+  }, {sort: {date: -1}}), function (_id, schedule) {
+    this.cursor(Meteor.users.find({_id: schedule.owner}, {
+      fields: {
+        profile: 1,
+        superchat: 1
+      }
+    }));
+  });
+
+  return this.ready();
 });

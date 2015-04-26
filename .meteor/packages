@@ -32,7 +32,6 @@ meteorhacks:npm
 
 npm-container
 check
-reywood:publish-composite
 mongo
 random
 meteor-platform
@@ -41,3 +40,4 @@ coderstv:reactive-path
 tmeasday:presence
 coderstv:chat
 meteorhacks:kadira
+cottz:publish-relations

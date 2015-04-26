@@ -1,24 +1,27 @@
 Meteor.publish('Followers', function () {
-  return Followers.find({followerId: this.userId});
+  return this.userId && Followers.find({followerId: this.userId}) || this.ready();
 });
 
 Meteor.publish('CoderFollowers', function (coderId) {
+  if (! coderId) {
+    return this.ready();
+  }
+
   var user = Meteor.users.findOneFromCoderId(coderId);
 
-  return Followers.find({coderId: user._id});
+  return user && Followers.find({coderId: user._id}) || this.ready();
 });
 
-Meteor.publishComposite('SelfFollowersWithProfiles', function () {
-  return {
-    find: function () {
-      return Followers.find({followerId: this.userId});
-    },
-    children: [{
-      find: function (follower) {
-        return Meteor.users.find({_id: follower.coderId}, {
+Meteor.publishRelations('SelfFollowersWithProfiles', function () {
+  if (this.userId) {
+    this.cursor(Followers.find({followerId: this.userId}), function (_id, follower) {
+      this.cursor(Meteor.users.find({_id: follower.coderId}, {
+        fields: {
           profile: 1
-        });
-      }
-    }]
-  };
+        }
+      }));
+    });
+  }
+
+  return this.ready();
 });

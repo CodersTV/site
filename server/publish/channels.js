@@ -1,63 +1,63 @@
-Meteor.publishComposite('FeaturedChannelWithUser', function () {
-  return {
-    find: function () {
-      return Channels.find({}, {sort: {finishedAt: 1, createdAt: 1}});
-    },
-    children: [{
-      find: function (channel) {
-        return Meteor.users.find({_id: channel.owner}, {
-          superchat: 1,
-          profile: 1
-        });
+Meteor.publishRelations('FeaturedChannelWithUser', function () {
+  this.cursor(Channels.find({featured: true}, {sort: {finishedAt: 1, createdAt: 1}}), function (_id, channel) {
+    this.cursor(Meteor.users.find({_id: channel.owner}, {
+      fields: {
+        superchat: 1,
+        profile: 1
       }
-    }]
-  };
+    }));
+  });
+
+  return this.ready();
 });
 
-Meteor.publishComposite('ChannelsSearchWithUsers', function (searchText) {
-  return {
-    find: function () {
-      if (_.isEmpty(searchText)) {
-        return Channels.find({}, {sort: {finishedAt: 1, createdAt: 1}});
-      }
-      check(searchText, String);
-
-      var regex = '.*' + searchText + '.*';
-
-      return Channels.find({$or : [
-        {title: {$regex: regex, $options: 'i'}},
-        {language: {$regex: regex, $options: 'i'}}
-      ]}, {
-        sort: {finishedAt: 1, createdAt: 1}
-      });
-    },
-    children: [{
-      find: function (channel) {
-        return Meteor.users.find({_id: channel.owner}, {
+Meteor.publishRelations('ChannelsSearchWithUsers', function (searchText) {
+  if (_.isEmpty(searchText)) {
+    this.cursor(Channels.find({}, {sort: {finishedAt: 1, createdAt: 1}}), function (_id, channel) {
+      this.cursor(Meteor.users.find({_id: channel.owner}, {
+        fields: {
           profile: 1
-        });
-      }
-    }]
-  };
+        }
+      }));
+    });
+  } else {
+    check(searchText, String);
+
+    var regex = '.*' + searchText + '.*';
+    this.cursor(Channels.find({$or : [
+      {title: {$regex: regex, $options: 'i'}},
+      {language: {$regex: regex, $options: 'i'}}
+    ]}, {
+      sort: {finishedAt: 1, createdAt: 1}
+    }), function (_id, channel) {
+      this.cursor(Meteor.users.find({_id: channel.owner}, {
+        fields: {
+          profile: 1
+        }
+      }));
+    });
+  }
+  return this.ready();
 });
 
-Meteor.publishComposite('ChannelsWithOwner', function (limit) {
-  return {
-    find: function () {
-      return Channels.find({}, {sort: {finishedAt: 1, createdAt: 1}, limit: limit || 0});
-    },
-    children: [{
-      find: function (channel) {
-        return Meteor.users.find({_id: channel.owner}, {
-          superchat: 1,
-          profile: 1
-        });
+Meteor.publishRelations('ChannelsWithOwner', function (limit) {
+  this.cursor(Channels.find({}, {sort: {finishedAt: -1, createdAt: -1}, limit: limit || 0}), function (_id, channel) {
+    this.cursor(Meteor.users.find({_id: channel.owner}, {
+      fields: {
+        superchat: 1,
+        profile: 1
       }
-    }]
-  };
+    }));
+  });
+
+  return this.ready();
 });
 
 Meteor.publish('CoderChannel', function (coderId) {
+  if (! coderId) {
+    return this.ready();
+  }
+
   var channels = Channels.find({
     owner: coderId
   });
@@ -77,5 +77,5 @@ Meteor.publish('CoderChannel', function (coderId) {
 });
 
 Meteor.publish('SelfVideos', function () {
-  return Channels.find({owner: this.userId});
+  return this.userId && Channels.find({owner: this.userId}) || this.ready();
 });

@@ -1,35 +1,22 @@
-Meteor.publishComposite('userPresenceWithProfile', function (coderUsername, coderId) {
-  return {
-    find: function () {
-      var filter, presences;
+Meteor.publishRelations('userPresenceWithProfile', function (coderUsername, coderId) {
+  var filter, presences;
 
-      if (_.isEmpty(coderUsername) && _.isEmpty(coderId)) {
-        this.ready();
-        return;
-      }
+  if (_.isEmpty(coderUsername) && _.isEmpty(coderId)) {
+    return this.ready();
+  }
 
-      if (coderUsername) {
-        check(coderUsername, String);
-      } else {
-        check(coderId, String);
-      }
+  check(coderUsername || coderId, String);
+  filter = {$or: [
+    {'state.whereAt': '/coder/' + coderUsername},
+    {'state.whereAt': '/coder/' + coderId}
+  ]};
 
-      filter = {$or: [
-        {'state.whereAt': '/coder/' + coderUsername},
-        {'state.whereAt': '/coder/' + coderId}
-      ]};
-      return Presences.find(filter, {fields: {state: true, userId: true}});
-    },
-    children: [{
-      find: function (presence) {
-        if (presence.userId) {
-          return Meteor.users.find({_id: presence.userId});
-        }
+  this.cursor(Presences.find(filter, {fields: {state: true, userId: true}}), function (_id, presence) {
+    if (presence.userId) {
+      this.cursor(Meteor.users.find({_id: presence.userId}));
+    }
+  });
 
-        this.ready();
-        return;
-      }
-    }]
-  };
+  return this.ready();
 });
 

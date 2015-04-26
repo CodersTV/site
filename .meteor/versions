@@ -19,6 +19,7 @@ cmather:handlebars-server@2.0.0
 coderstv:chat@0.2.0
 coderstv:reactive-path@0.2.1
 coffeescript@1.0.5
+cottz:publish-relations@1.2.0
 dburles:collection-helpers@1.0.2
 ddp@1.0.14
 deps@1.0.6
@@ -80,7 +81,6 @@ reactive-dict@1.0.5
 reactive-var@1.0.4
 reload@1.1.2
 retry@1.0.2
-reywood:publish-composite@1.3.5
 routepolicy@1.0.4
 service-configuration@1.0.3
 session@1.0.5
