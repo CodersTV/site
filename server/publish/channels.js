@@ -41,7 +41,7 @@ Meteor.publishRelations('ChannelsSearchWithUsers', function (searchText) {
 });
 
 Meteor.publishRelations('ChannelsWithOwner', function (limit) {
-  this.cursor(Channels.find({}, {sort: {finishedAt: 1, createdAt: 1}, limit: limit || 0}), function (_id, channel) {
+  this.cursor(Channels.find({}, {sort: {finishedAt: -1, createdAt: -1}, limit: limit || 0}), function (_id, channel) {
     this.cursor(Meteor.users.find({_id: channel.owner}, {
       fields: {
         superchat: 1,
