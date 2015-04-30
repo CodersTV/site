@@ -27,6 +27,7 @@ ejson@1.0.5
 email@1.0.5
 fastclick@1.0.2
 follower-livedata@1.0.3
+gabrielhpugliese:logentries@0.0.1
 gadicohen:robots-txt@0.0.9
 gadicohen:sitemaps@0.0.20
 geojson-utils@1.0.2
@@ -47,6 +48,7 @@ iron:url@1.0.7
 joshowens:shareit@0.3.1
 jquery@1.11.3
 json@1.0.2
+lablancas:twitter@0.0.1
 launch-screen@1.0.1
 lepozepo:streams@0.2.0
 less@1.0.12

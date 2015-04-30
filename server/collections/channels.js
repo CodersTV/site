@@ -26,7 +26,7 @@ Channels.sendFollowEmail = function (userId, doc) {
   _.each(followers, function (follower) {
     follower = Meteor.users.findOne({_id: follower.followerId});
     var vars = {
-      userName: follower.profile.name,  
+      userName: follower.profile.name,
       coderName: coder.profile.name,
       videoTitle: doc.title,
       videoDescription: marked(doc.description),
@@ -62,6 +62,24 @@ Channels.before.insert(function (userId, doc) {
 
 Channels.after.insert(function (userId, doc) {
   Channels.sendFollowEmail(userId, doc);
+});
+
+Channels.after.insert(function (userId, doc) {
+  var user = Meteor.users.findOne(userId);
+  var usernameOrId = user.profile.user || userId;
+
+  Twitter.postAsync(
+    TwitterClient,
+    'statuses/update',
+    {
+      status: 'It\'s starting: http://coderstv.com/coder/' + usernameOrId + ' | ' + doc.title
+    },
+    function (err, tweet, res) {
+      if (err) {
+        log.log('err', 'Could not tweet: ' + tweet.text + ' - Channel: ' + doc);
+      }
+    }
+  );
 });
 
 Channels.before.update(function (userId, doc, fieldNames, modifier, options) {
