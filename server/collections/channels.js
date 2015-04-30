@@ -74,11 +74,11 @@ Channels.after.insert(function (userId, doc) {
     {
       status: 'It\'s starting: http://coderstv.com/coder/' + usernameOrId + ' | ' + doc.title
     },
-    function (err, tweet, res) {
+    Meteor.bindEnvironment(function (err, tweet, res) {
       if (err) {
         log.log('err', 'Could not tweet: ' + tweet.text + ' - Channel: ' + doc);
       }
-    }
+    })
   );
 });
 
