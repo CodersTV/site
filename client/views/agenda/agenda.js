@@ -8,7 +8,7 @@ Template.agenda.events({
   },
   'click .follow-coder': function (event) {
     var coderId = Router.current().data().owner;
-    
+
     if (Meteor.user()) {
       $(event.target).popover('hide');
     } else {
@@ -44,8 +44,8 @@ Template.agenda.events({
     if (! isSure) {
       return false;
     }
-
     Schedule.cancel(_id);
+    Router.go('schedule');
   },
   'click .js-uncancel-event': function () {
     var _id = Router.current().data()._id;
@@ -104,7 +104,7 @@ Disqus.SSO = function () {
 
     Session.set('disqusSSO', res);
     window.disqus_config = function () {
-      this.page.identifier = Path();  
+      this.page.identifier = Path();
       this.page.url = Meteor.absoluteUrl() + Path().substr(1);
       if (! _.isEmpty(res)) {
         this.page.remote_auth_s3 = res.auth;
@@ -119,8 +119,8 @@ Disqus.reset = function () {
   try {
     DISQUS.reset({
       reload: true,
-      config: function () {  
-        this.page.identifier = Path();  
+      config: function () {
+        this.page.identifier = Path();
         this.page.url = Meteor.absoluteUrl() + Path().substr(1);
         if (! _.isEmpty(disqusSSO)) {
           this.page.remote_auth_s3 = disqusSSO.auth;
@@ -129,6 +129,6 @@ Disqus.reset = function () {
       }
     });
   } catch (err) {
-    
+
   }
 };
