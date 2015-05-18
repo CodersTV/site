@@ -14,7 +14,7 @@
             </div>
             {{#if $eq owner $.Meteor.userId}}
             <div class="row">
-              {{#if isActive}} 
+              {{#if isActive}}
               <button class="js-cancel-event btn btn-danger">Cancel this event</button>
               {{else}}
               <button class="js-uncancel-event btn btn-success">Undo cancel event</button>
@@ -65,13 +65,19 @@
             <div class="row well">
               <h5>Share this event:</h5>
               {{#with title}}
-                {{> shareit_twitter title=this}} 
+                {{> shareit_twitter title=this}}
                 {{> shareit_fb title=this}}
                 {{> shareit_google title=this}}
               {{/with}}
             </div>
+            <div class="row well">
+              <h5>Add this event to your agenda:</h5>
+              <a class="large btn download-ics" href="#">
+                <i class="fa fa-download"></i> Download ics
+              </a>
+            </div>
           </div>
-        </div>  
+        </div>
         <div class="row">
           <div class="col-md-12">
             <div id="disqus_thread"></div>
