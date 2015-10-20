@@ -51,6 +51,12 @@ Template.agenda.events({
     var _id = Router.current().data()._id;
 
     Schedule.uncancel(_id);
+  },
+  'click .download-ics': function(event) {
+    event.preventDefault();
+    var blob = new Blob([ics.createFile(this)],
+      {type: 'text/calendar;charset=UTF-8'});
+    return saveAs(blob, 'coderstv-calendar.ics');
   }
 });
 
